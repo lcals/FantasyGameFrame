@@ -15,12 +15,12 @@ namespace Fantasy.Logic
 
         public override void Install()
         {
-            AddModule<TestModule>(new TestModule(PluginManager,true));
+            AddModule<ITestModule>(new TestModule(PluginManager,true));
         }
 
         public override void Uninstall()
         {
-           RemoveModule<TestModule>();
+           RemoveModule<ITestModule>();
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Fantasy.Frame
             var moduleName = typeof(T).ToString();
 #if FANTASY_SECURITY_CHECK
             if (_modules.ContainsKey(moduleName)) return;
+            if (module is not T) return;
 #endif
             _modules.Add(moduleName, module);
             PluginManager.AddModule(moduleName, module);

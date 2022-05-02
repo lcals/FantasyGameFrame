@@ -3,7 +3,12 @@ using UnityEngine;
 
 namespace Fantasy.Logic
 {
-    public class TestModule:AModule
+    public interface ITestModule
+    {
+        void Test();
+    }
+
+    public class TestModule:AModule,ITestModule
     {
         public TestModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
@@ -42,6 +47,12 @@ namespace Fantasy.Logic
         {
             Debug.Log(nameof(Shut));
 
+        }
+
+        public void Test()
+        {
+          
+            Debug.Log(nameof(Test));
         }
     }
 }

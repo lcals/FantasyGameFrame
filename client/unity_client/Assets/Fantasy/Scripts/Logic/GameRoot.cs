@@ -17,6 +17,8 @@ namespace Fantasy.Logic
             _pluginManager = new PluginManager(null,false);
             _pluginManager.Install();
             _pluginManager.Awake();
+            var test = _pluginManager.FindModule<ITestModule>() as ITestModule; 
+            test.Test();;
         }
 
         private void Start()

@@ -169,7 +169,7 @@ namespace Fantasy.Frame.Tests
             pluginManager.BeforeShut();
             pluginManager.Shut();
             
-            var findModule=pluginManager.FindModule<TestModule>();
+            var findModule=pluginManager.FindModule<TestModule>() as TestModule;
             Assert.IsTrue(findModule.Index==6);
         }
         

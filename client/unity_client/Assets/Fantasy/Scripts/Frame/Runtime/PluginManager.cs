@@ -84,14 +84,13 @@ namespace Fantasy.Frame
             }
         }
         
-        public void RemoveModule<T>() where T : AModule
+        public void RemoveModule<T>() 
         {
             RemoveModule(typeof(T).ToString());
         }
-        public T FindModule<T>() where T : AModule
+        public AModule FindModule<T>() 
         {
-            var module = FindModule(typeof(T).ToString());
-            return (T) module;
+            return  FindModule(typeof(T).ToString());
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
