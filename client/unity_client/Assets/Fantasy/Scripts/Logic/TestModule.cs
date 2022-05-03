@@ -33,8 +33,7 @@ namespace Fantasy.Logic
 
         public override void Execute()
         {
-            Debug.Log(nameof(Execute));
-
+            //Debug.Log(nameof(Execute));
         }
 
         public override void BeforeShut()

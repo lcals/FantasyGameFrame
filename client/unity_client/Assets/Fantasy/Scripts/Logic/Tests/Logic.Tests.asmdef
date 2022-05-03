@@ -1,17 +1,20 @@
 {
-    "name": "Frame.Tests",
+    "name": "Logic.Tests",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Frame.Runtime"
+        "Frame.Runtime",
+        "Logic.Runtime",
+        "ZLogger",
+        "ZString"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
+    "overrideReferences": false,
     "precompiledReferences": [
         "nunit.framework.dll"
     ],
