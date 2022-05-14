@@ -1,4 +1,4 @@
 #!/bin/bash
 echo "mac_gen.sh"
 cd Assets/Scripts/Logic/Editor/Config/Tools || exit 1
-./flatc  -o ./../../../Runtime/Config --csharp --cs-gen-json-serializer  --gen-onefile --gen-object-api ./../Fbs/monster.fbs
+./flatc  --csharp   --csharp --cs-gen-json-serializer  --gen-object-api    -o ./../../../Runtime/Config/Gen  ./../Fbs/ConfigRoot.fbs ./../Fbs/Role.fbs ./../Fbs/Item.fbs
