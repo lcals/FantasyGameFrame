@@ -41,11 +41,11 @@ namespace Fantasy.Logic.Editor
             }
             WriteRecords(roles, nameof(RoleT));
         }
-        [MenuItem("FantasyTools/GenerateDataBin")]
+        [MenuItem("FantasyTools/GenerateDataBytes")]
         public static void GenerateDataBin()
         {
             const string cacheDataPath = "Assets/Scripts/Logic/Editor/CacheData/ConfigRoot.json";
-            const string binPath = "Assets/Resources/Config/config.bin";
+            const string binPath = "Assets/Resources/Config/config.bytes";
             var version = 0;
             if (File.Exists(cacheDataPath))
             {

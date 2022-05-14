@@ -18,11 +18,15 @@ namespace Fantasy.Logic
         public override void Install()
         {
             AddModule<IFantasyLogModule>(new FantasyLogModule(PluginManager,false));
+            AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager,true));
+
         }
 
         public override void Uninstall()
         {
-           RemoveModule<IFantasyLogModule>();
+            RemoveModule<IFantasyConfigModule>();
+            RemoveModule<IFantasyLogModule>();
+           
         }
     }
 }
