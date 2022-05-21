@@ -1,1 +1,7 @@
 client/unity_client/Assets/Plugins/Sirenix
+tools/static_file_server/obj
+tools/static_file_server/bin
+tools/static_file_server/.vs
+tools/static_file_server/.idea
+client/web_server/tools
+client/web_server/files

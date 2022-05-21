@@ -15,7 +15,7 @@ namespace Fantasy.Logic.Editor
 {
     public static class FantasyConfigModuleEditor
     {
-        [MenuItem("FantasyTools/GenerateDataStruct")]
+        [MenuItem("FantasyTools/Config/GenerateDataStruct")]
         public static void GenerateDataStruct()
         {
 #if UNITY_EDITOR_OSX
@@ -25,7 +25,7 @@ namespace Fantasy.Logic.Editor
 #endif
         }
 
-        [MenuItem("FantasyTools/GenerateDataCsv")]
+        [MenuItem("FantasyTools/Config/GenerateDataCsv")]
         public static void GenerateDataCsv()
         {
             var items = ReaderRecords<ItemT>(nameof(ItemT));
@@ -41,7 +41,7 @@ namespace Fantasy.Logic.Editor
             }
             WriteRecords(roles, nameof(RoleT));
         }
-        [MenuItem("FantasyTools/GenerateDataBytes")]
+        [MenuItem("FantasyTools/Config/GenerateDataBytes")]
         public static void GenerateDataBin()
         {
             const string cacheDataPath = "Assets/Scripts/Logic/Editor/CacheData/ConfigRoot.json";
