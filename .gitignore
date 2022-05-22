@@ -6,3 +6,4 @@ tools/static_file_server/.idea
 client/web_server/tools
 client/web_server/files
 build
+client/unity_client/Assets/StreamingAssets
