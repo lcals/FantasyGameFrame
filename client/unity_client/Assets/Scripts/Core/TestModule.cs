@@ -16,19 +16,19 @@ namespace Fantasy.Logic
 
         public override void Awake()
         {
-            Debug.Log(nameof(Awake));
+            Debug.Log($"TestModule {nameof(Awake)}");
         }
 
         public override void Init()
         {
-            Debug.Log(nameof(Init));
+            Debug.Log($"TestModule {nameof(Init)}");
 
         }
 
         public override void AfterInit()
         {
-            Debug.Log(nameof(AfterInit));
-
+            Debug.Log($"TestModule {nameof(AfterInit)}");
+            
         }
 
         public override void Execute()
@@ -38,20 +38,17 @@ namespace Fantasy.Logic
 
         public override void BeforeShut()
         {
-            Debug.Log(nameof(BeforeShut));
-
+            Debug.Log($"TestModule {nameof(BeforeShut)}");
         }
 
         public override void Shut()
         {
-            Debug.Log(nameof(Shut));
-
+            Debug.Log($"TestModule {nameof(Shut)}");
         }
 
         public void Test()
         {
-          
-            Debug.Log(nameof(Test));
+            Debug.Log($"TestModule {nameof(Test)}");
         }
     }
 }

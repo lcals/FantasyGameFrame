@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Fantasy.Config;
 using Fantasy.Frame;
 using Fantasy.Logic.Interface;
@@ -16,6 +17,7 @@ namespace Fantasy.Logic.Achieve
         {
             
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void LoadData()
         {
             var  textAsset= Resources.Load<TextAsset>("Config/config");
