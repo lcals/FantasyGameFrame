@@ -25,6 +25,7 @@ namespace Fantasy.Logic
 
         public override void Uninstall()
         {
+            RemoveModule<IFantasyAssetModule>();
             RemoveModule<IFantasyConfigModule>();
             RemoveModule<IFantasyLogModule>();
            

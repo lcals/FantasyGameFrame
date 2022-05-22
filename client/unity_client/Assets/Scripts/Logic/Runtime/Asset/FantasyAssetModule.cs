@@ -43,7 +43,7 @@ namespace Fantasy.Logic.Achieve
 
         private bool _init;
         private bool _initUpdate;
-        private VersionInfoT _versionInfoT;
+        private VersionInfoT _oldVersionInfoT;
         private VersionInfoT _newVersionInfoT;
         private CancellationTokenSource _cts;
         
@@ -98,10 +98,10 @@ namespace Fantasy.Logic.Achieve
             }
 
             var versionInfoT = ReadVersionInfoT(path);
-            _versionInfoT = versionInfoT;
+            _oldVersionInfoT = versionInfoT;
             _init = true;
             _logger.ZLogDebug("VersionInfoT : \n{0}", versionInfoT.SerializeToJson());
-            if (_versionInfoT.Update)
+            if (_oldVersionInfoT.Update)
             {
                 try
                 {
@@ -170,5 +170,30 @@ namespace Fantasy.Logic.Achieve
         }
 
         #endregion
+
+        public bool GetInitSuccessful()
+        {
+            return _init;
+        }
+
+        public bool GetUpdateSuccessful()
+        {
+            return _initUpdate;
+        }
+
+        public VersionInfoT GetOLdVersionInfoT()
+        {
+            return _oldVersionInfoT;
+        }
+
+        public VersionInfoT GetNewVersionInfoT()
+        {
+            return _newVersionInfoT;
+        }
+
+        public void StartUpdate()
+        {
+            _logger.ZLogDebug("{0}   StartUpdate", nameof(FantasyConfigModule));
+        }
     }
 }

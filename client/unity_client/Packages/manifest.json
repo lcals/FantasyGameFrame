@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.cysharp.zstring": "https://github.com/Cysharp/ZString.git?path=src/ZString.Unity/Assets/Scripts/ZString#2.4.4",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.3.1",
+    "com.cysharp.zstring": "https://github.com/Cysharp/ZString.git?path=src/ZString.Unity/Assets/Scripts/ZString#2.4.4",
     "com.unity.cinemachine": "2.8.4",
     "com.unity.collab-proxy": "1.15.15",
     "com.unity.ide.rider": "3.0.13",
@@ -14,6 +14,9 @@
     "com.unity.timeline": "1.7.1",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.7.7",
+    "dev.kyubuns.akyuiunity": "https://github.com/kyubuns/AkyuiUnity.git?path=Assets/AkyuiUnity",
+    "dev.kyubuns.akyuiunityxd": "https://github.com/kyubuns/AkyuiUnity.git?path=Assets/AkyuiUnity.Xd",
+    "dev.kyubuns.ankuchen": "https://github.com/kyubuns/AnKuchen.git?path=Unity/Assets/AnKuchen",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
