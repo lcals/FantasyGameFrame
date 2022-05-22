@@ -20,10 +20,11 @@ MonoBehaviour:
   triggers:
   - {fileID: 11400000, guid: 25c5f11210de6404aa520ee271c3ecb3, type: 2}
   - {fileID: 11400000, guid: 6d4660ad80f7d477a932be8aab9ff600, type: 2}
+  - {fileID: 11400000, guid: 77e279e48a3484604971cafc2d0a85f3, type: 2}
   spriteSaveScale: 1
   reimportLayout: 1
   reimportAsset: 0
-  logType: 1
+  logType: 0
   objectParsers:
   - {fileID: 11400000, guid: 0d0d715fcb28548e9b4839523184e44e, type: 2}
   groupParsers: []
