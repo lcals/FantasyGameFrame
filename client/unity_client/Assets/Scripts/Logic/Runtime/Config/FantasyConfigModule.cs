@@ -18,15 +18,15 @@ namespace Fantasy.Logic.Achieve
             
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void LoadData()
+        public void LoadData(byte[] bytes)
         {
-            var  textAsset= Resources.Load<TextAsset>("Config/config");
-            Config.ConfigRootT = ConfigRootT.DeserializeFromBinary(textAsset.bytes);
+            Config.ConfigRootT = ConfigRootT.DeserializeFromBinary(bytes);
+            _logger.ZLogDebug("ConfigRootT.Version {0}", Config.ConfigRootT.Version.ToString());
         }
 
         public void UpdateData()
         {
-            LoadData();
+            
         }
         
         #region 
@@ -37,8 +37,6 @@ namespace Fantasy.Logic.Achieve
             Debug.Assert(_fantasyLogModule != null, nameof(_fantasyLogModule) + " != null");
             _logger = _fantasyLogModule.GetLogger<FantasyConfigModule>();
             _logger.ZLogDebug("{0}   Awake",nameof(FantasyConfigModule));
-             LoadData();
-            _logger.ZLogDebug("ConfigRootT.Version {0}", Config.ConfigRootT.Version.ToString());
         }
 
         public override void Init()

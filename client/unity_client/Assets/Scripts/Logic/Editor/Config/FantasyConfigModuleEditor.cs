@@ -24,7 +24,7 @@ namespace Fantasy.Logic.Editor
             Debug.Log($"Shall_Open : {shell}");
 #endif
         }
-
+        
         [MenuItem("FantasyTools/Config/GenerateDataCsv")]
         public static void GenerateDataCsv()
         {
@@ -41,11 +41,24 @@ namespace Fantasy.Logic.Editor
             }
             WriteRecords(roles, nameof(RoleT));
         }
+
         [MenuItem("FantasyTools/Config/GenerateDataBytes")]
         public static void GenerateDataBin()
         {
+            var binPath = $"{FantasyAssetModuleEditor.AssetDirectory}/Config/config.bytes";
+            GenerateDataCsv();
+            GenerateDataBin(binPath);
+            FantasyAssetModuleEditor.AddDataVersion();
+        }
+
+        private static void GenerateDataBin(string binPath)
+        {
+            var dic = Path.GetDirectoryName(binPath);
+            if (!Directory.Exists(dic)&&!string.IsNullOrEmpty(dic))
+            { 
+                Directory.CreateDirectory(dic);
+            }
             const string cacheDataPath = "Assets/Scripts/Logic/Editor/CacheData/ConfigRoot.json";
-            const string binPath = "Assets/Resources/Config/config.bytes";
             var version = 0;
             if (File.Exists(cacheDataPath))
             {
@@ -73,6 +86,7 @@ namespace Fantasy.Logic.Editor
             AssetDatabase.Refresh();
         }
 
+        
         private static List<T> ReaderRecords<T>(string path)
         {
             path = $"{Application.dataPath}/../../../config/{path}.csv";

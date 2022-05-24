@@ -2,7 +2,7 @@ namespace Fantasy.Logic.Interface
 {
     public interface IFantasyConfigModule
     {
-        void LoadData();
+        void LoadData(byte[] bytes);
         void UpdateData();
     }
 }

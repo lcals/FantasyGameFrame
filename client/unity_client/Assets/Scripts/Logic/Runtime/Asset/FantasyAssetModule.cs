@@ -33,10 +33,13 @@ namespace Fantasy.Logic.Achieve
         public const bool IsUseAssetBundle = true;
 #endif
 
+        public const string ConfigPath = "Config/config.bytes";
+
         private readonly string _localResourceDirectory;
         private readonly string _cacheResourceDirectory;
         private readonly string _rootPath;
 
+        
 
         private IFantasyLogModule _fantasyLogModule;
         private ILogger<FantasyAssetModule> _logger;
@@ -46,7 +49,7 @@ namespace Fantasy.Logic.Achieve
         private VersionInfoT _oldVersionInfoT;
         private VersionInfoT _newVersionInfoT;
         private CancellationTokenSource _cts;
-        
+        private IFantasyConfigModule _fantasyConfigModule;
 
 
         public FantasyAssetModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
@@ -96,7 +99,6 @@ namespace Fantasy.Logic.Achieve
             {
                 path = ZString.Concat(_rootPath, VersionInfoName);
             }
-
             var versionInfoT = ReadVersionInfoT(path);
             _oldVersionInfoT = versionInfoT;
             _init = true;
@@ -170,7 +172,15 @@ namespace Fantasy.Logic.Achieve
         }
 
         #endregion
-
+        
+        public string GetLocalResourceDirectory()
+        {
+            return _localResourceDirectory;
+        }
+        public string GetCacheResourceDirectory()
+        {
+            return _cacheResourceDirectory;
+        }
         public bool GetInitSuccessful()
         {
             return _init;
@@ -194,6 +204,42 @@ namespace Fantasy.Logic.Achieve
         public void StartUpdate()
         {
             _logger.ZLogDebug("{0}   StartUpdate", nameof(FantasyConfigModule));
+            _fantasyConfigModule= PluginManager.FindModule<IFantasyConfigModule>() as  IFantasyConfigModule;
+            UpdateGameAsync().Forget();
+        }
+        private async UniTaskVoid UpdateGameAsync()
+        {
+            await UniTask.SwitchToThreadPool();
+            var updateData = UpdateDataAsync();
+            var updateAssetBundle = UpdateAssetBundleAsync();
+            await (updateData, updateAssetBundle);
+            await UniTask.SwitchToMainThread();
+        }
+        private  async UniTask UpdateDataAsync( )
+        {
+            if (_oldVersionInfoT.DataVersion!=_newVersionInfoT.DataVersion)
+            {
+                try
+                {
+                    using var client = new HttpClient();
+                    var url = ZString.Concat(_newVersionInfoT.Url, ConfigPath);
+                    _logger.ZLogDebug("ConfigPath url : \n{0}", url);
+                    // var response = await client.GetAsync(url, _cts.Token);
+                    // response.EnsureSuccessStatusCode();
+                    // var bytes=   await response.Content.ReadAsByteArrayAsync();
+                     var bytes = await client.GetByteArrayAsync(url);
+                    _fantasyConfigModule.LoadData(bytes);
+                }
+                catch (TaskCanceledException)
+                {
+                    var url = ZString.Concat(_newVersionInfoT.Url, ConfigPath);
+                    _logger.ZLogError("Request timed out {0}",url);
+                }   
+            }
+        }
+        private  async UniTask UpdateAssetBundleAsync( )
+        {
+            await UniTask.Delay(0);
         }
     }
 }
