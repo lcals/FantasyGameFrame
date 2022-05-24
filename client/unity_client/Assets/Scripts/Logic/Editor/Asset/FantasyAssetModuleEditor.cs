@@ -1,7 +1,6 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using Fantasy.Logic.Achieve;
 using Fantasy.VersionInfo;
 using UnityEditor;
@@ -11,7 +10,7 @@ namespace Fantasy.Logic.Editor
 {
     public class FantasyAssetModuleEditor
     {
-        private static readonly string AssetDirectory = $"{Application.streamingAssetsPath}/../AssetDirectory~";
+        public static readonly string AssetDirectory = $"{Application.streamingAssetsPath}/../AssetDirectory~";
 
         [MenuItem("FantasyTools/Asset/GenerateDataStruct")]
         public static void GenerateDataStruct()
@@ -45,32 +44,25 @@ namespace Fantasy.Logic.Editor
             File.WriteAllBytes(
                 $"{AssetDirectory}/{FantasyAssetModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.bin",
                 versionInfoT.SerializeToBinary());
-            AssetDatabase.Refresh();
         }
-        [MenuItem("FantasyTools/Asset/CopyFilesToFileServer")]
-        public static void CopyFilesToFileServer()
+     
+        public static void AddDataVersion()
         {
-                var sourcePath = AssetDirectory;
-                var targetPath = $"{Application.dataPath}/../../web_server/files/";
-                var oldFiles = Directory.GetFiles(targetPath, "*.*", SearchOption.AllDirectories).ToList();
-            
-                //创建所有新目录
-                foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
-                {
-                    Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
-                }
-                //复制所有文件 & 保持文件名和路径一致
-                foreach (var newPath in Directory.GetFiles(sourcePath, "*.*",SearchOption.AllDirectories))
-                {
-                    var newFilePath = newPath.Replace(sourcePath, targetPath);
-                    File.Copy(newPath, newFilePath, true);
-                    oldFiles.Remove(newFilePath);
-                }
-                foreach (var file in oldFiles)
-                {
-                    File.Delete(file);
-                }
-            
+            if (!Directory.Exists(AssetDirectory))
+            {
+                GenerateDefaultVersion();
+            }
+            var jsonPath =
+                $"{AssetDirectory}/{FantasyAssetModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.json";
+            var versionInfoT = VersionInfoT.DeserializeFromJson(File.ReadAllText(jsonPath));
+            versionInfoT.DataVersion++;
+            versionInfoT.TotalVersion++;
+            File.WriteAllText(
+                $"{AssetDirectory}/{FantasyAssetModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.json",
+                versionInfoT.SerializeToJson());
+            File.WriteAllBytes(
+                $"{AssetDirectory}/{FantasyAssetModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.bin",
+                versionInfoT.SerializeToBinary());
         }
     }
 }
