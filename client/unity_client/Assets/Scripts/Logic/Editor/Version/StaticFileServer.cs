@@ -1,8 +1,10 @@
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Fantasy.Logic.Editor
 {
@@ -17,7 +19,7 @@ namespace Fantasy.Logic.Editor
 #if UNITY_EDITOR_OSX
                 try
                 {
-                    var proc = new System.Diagnostics.Process();
+                    var proc = new Process();
                     proc.StartInfo.FileName = "/bin/zsh";
                     proc.StartInfo.Arguments = shell;
                     proc.StartInfo.CreateNoWindow = false;
@@ -46,7 +48,7 @@ namespace Fantasy.Logic.Editor
             var shell = $"{Application.dataPath}/Scripts/Logic/Editor/Asset/Tools/mac_close_static_file_server.sh";
             try
             {
-                var proc = new System.Diagnostics.Process();
+                var proc = new Process();
                 proc.StartInfo.FileName = "/bin/zsh";
                 proc.StartInfo.Arguments = shell;
                 proc.StartInfo.CreateNoWindow = false;

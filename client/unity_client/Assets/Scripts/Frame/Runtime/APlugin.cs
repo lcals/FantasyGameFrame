@@ -5,16 +5,15 @@ namespace Fantasy.Frame
 {
     public abstract class APlugin : AModule
     {
-        
         private readonly Dictionary<string, AModule> _modules = new();
         public abstract string GetPluginName();
         public abstract void Install();
         public abstract void Uninstall();
-        
+
         protected APlugin(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
-            
         }
+
         public override void Awake()
         {
             foreach (var module in _modules.Values) module?.Awake();
@@ -32,7 +31,6 @@ namespace Fantasy.Frame
 
         public override void Execute()
         {
-            
         }
 
         public override void BeforeShut()
@@ -48,32 +46,24 @@ namespace Fantasy.Frame
         public void AddModule<T>(AModule module)
         {
             var moduleName = typeof(T).ToString();
-#if FANTASY_SECURITY_CHECK
             if (_modules.ContainsKey(moduleName)) return;
             if (module is not T) return;
-#endif
             _modules.Add(moduleName, module);
             PluginManager.AddModule(moduleName, module);
         }
-        
+
         public void RemoveModule<T>()
         {
             var moduleName = typeof(T).ToString();
             RemoveModule(moduleName);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveModule(string moduleName)
         {
-#if FANTASY_SECURITY_CHECK
             if (!_modules.ContainsKey(moduleName)) return;
-#endif
             _modules.Remove(moduleName);
             PluginManager.RemoveModule(moduleName);
         }
-        
-    
-
-     
     }
 }

@@ -2,7 +2,7 @@ using Fantasy.Frame;
 
 namespace Fantasy.Logic
 {
-    public class TestPlugin:APlugin
+    public class TestPlugin : APlugin
     {
         public TestPlugin(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
@@ -15,12 +15,12 @@ namespace Fantasy.Logic
 
         public override void Install()
         {
-            AddModule<ITestModule>(new TestModule(PluginManager,true));
+            AddModule<ITestModule>(new TestModule(PluginManager, true));
         }
 
         public override void Uninstall()
         {
-           RemoveModule<ITestModule>();
+            RemoveModule<ITestModule>();
         }
     }
 }

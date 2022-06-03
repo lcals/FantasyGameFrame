@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Fantasy.Logic.Editor;
@@ -6,6 +7,7 @@ using Fantasy.Logic.Interface;
 using Fantasy.VersionInfo;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Logic.Editor.Version
 {
@@ -16,7 +18,7 @@ namespace Logic.Editor.Version
         {
 #if UNITY_EDITOR_OSX
             var shell = $"{Application.dataPath}/Scripts/Logic/Editor/Version/Tools/mac_gen.sh";
-            System.Diagnostics.Process.Start("/bin/bash", shell);
+            Process.Start("/bin/bash", shell);
             Debug.Log($"Shall_Open : {shell}");
 #endif
         }

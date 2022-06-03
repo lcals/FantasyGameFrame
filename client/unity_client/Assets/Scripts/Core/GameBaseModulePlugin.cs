@@ -4,24 +4,23 @@ using Fantasy.Logic.Interface;
 
 namespace Fantasy.Logic
 {
-    public class GameBaseModulePlugin:APlugin
+    public class GameBaseModulePlugin : APlugin
     {
         public GameBaseModulePlugin(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
-            
         }
 
         public override string GetPluginName()
         {
             return nameof(GameBaseModulePlugin);
         }
-        
+
         public override void Install()
         {
-            AddModule<IFantasyLogModule>(new FantasyLogModule(PluginManager,false));
-            AddModule<IFantasyVersionModule>(new FantasyVersionModule(PluginManager,false));
-            AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager,true));
-            AddModule<IFantasyAssetModule>(new FantasyAssetModule(PluginManager,true));
+            AddModule<IFantasyLogModule>(new FantasyLogModule(PluginManager, false));
+            AddModule<IFantasyVersionModule>(new FantasyVersionModule(PluginManager, false));
+            AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager, true));
+            AddModule<IFantasyAssetModule>(new FantasyAssetModule(PluginManager, true));
         }
 
         public override void Uninstall()
@@ -30,7 +29,6 @@ namespace Fantasy.Logic
             RemoveModule<IFantasyConfigModule>();
             RemoveModule<IFantasyVersionModule>();
             RemoveModule<IFantasyLogModule>();
-           
         }
     }
 }

@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace FlatBuffers
@@ -28,7 +27,7 @@ namespace FlatBuffers
         public int bb_pos { get; private set; }
         public ByteBuffer bb { get; private set; }
 
-        public ByteBuffer ByteBuffer { get { return bb; } }
+        public ByteBuffer ByteBuffer => bb;
 
         // Re-init the internal state with an external buffer {@code ByteBuffer} and an offset within.
         public Table(int _i, ByteBuffer _bb) : this()
@@ -41,14 +40,14 @@ namespace FlatBuffers
         // present.
         public int __offset(int vtableOffset)
         {
-            int vtable = bb_pos - bb.GetInt(bb_pos);
-            return vtableOffset < bb.GetShort(vtable) ? (int)bb.GetShort(vtable + vtableOffset) : 0;
+            var vtable = bb_pos - bb.GetInt(bb_pos);
+            return vtableOffset < bb.GetShort(vtable) ? (int) bb.GetShort(vtable + vtableOffset) : 0;
         }
 
         public static int __offset(int vtableOffset, int offset, ByteBuffer bb)
         {
-            int vtable = bb.Length - offset;
-            return (int)bb.GetShort(vtable + vtableOffset - bb.GetInt(vtable)) + vtable;
+            var vtable = bb.Length - offset;
+            return (int) bb.GetShort(vtable + vtableOffset - bb.GetInt(vtable)) + vtable;
         }
 
         // Retrieve the relative offset stored at "offset"
@@ -83,7 +82,7 @@ namespace FlatBuffers
         public int __vector(int offset)
         {
             offset += bb_pos;
-            return offset + bb.GetInt(offset) + sizeof(int);  // data starts after the length
+            return offset + bb.GetInt(offset) + sizeof(int); // data starts after the length
         }
 
 #if ENABLE_SPAN_T && (UNSAFE_BYTEBUFFER || NETSTANDARD2_1)
@@ -93,19 +92,14 @@ namespace FlatBuffers
         public Span<T> __vector_as_span<T>(int offset, int elementSize) where T : struct
         {
             if (!BitConverter.IsLittleEndian)
-            {
-               throw new NotSupportedException("Getting typed span on a Big Endian " +
-                                               "system is not support");
-            }
+                throw new NotSupportedException("Getting typed span on a Big Endian " +
+                                                "system is not support");
 
-            var o = this.__offset(offset);
-            if (0 == o)
-            {
-                return new Span<T>();
-            }
+            var o = __offset(offset);
+            if (0 == o) return new Span<T>();
 
-            var pos = this.__vector(o);
-            var len = this.__vector_len(o);
+            var pos = __vector(o);
+            var len = __vector_len(o);
             return MemoryMarshal.Cast<byte, T>(bb.ToSpan(pos, len * elementSize));
         }
 #else
@@ -132,27 +126,22 @@ namespace FlatBuffers
         public T[] __vector_as_array<T>(int offset)
             where T : struct
         {
-            if(!BitConverter.IsLittleEndian)
-            {
+            if (!BitConverter.IsLittleEndian)
                 throw new NotSupportedException("Getting typed arrays on a Big Endian " +
-                    "system is not support");
-            }
+                                                "system is not support");
 
-            var o = this.__offset(offset);
-            if (0 == o)
-            {
-                return null;
-            }
+            var o = __offset(offset);
+            if (0 == o) return null;
 
-            var pos = this.__vector(o);
-            var len = this.__vector_len(o);
+            var pos = __vector(o);
+            var len = __vector_len(o);
             return bb.ToArray<T>(pos, len);
         }
 
         // Initialize any Table-derived type to point to the union at the given offset.
         public T __union<T>(int offset) where T : struct, IFlatbufferObject
         {
-            T t = new T();
+            var t = new T();
             t.__init(__indirect(offset), bb);
             return t;
         }
@@ -160,12 +149,12 @@ namespace FlatBuffers
         public static bool __has_identifier(ByteBuffer bb, string ident)
         {
             if (ident.Length != FlatBufferConstants.FileIdentifierLength)
-                throw new ArgumentException("FlatBuffers: file identifier must be length " + FlatBufferConstants.FileIdentifierLength, "ident");
+                throw new ArgumentException(
+                    "FlatBuffers: file identifier must be length " + FlatBufferConstants.FileIdentifierLength, "ident");
 
             for (var i = 0; i < FlatBufferConstants.FileIdentifierLength; i++)
-            {
-                if (ident[i] != (char)bb.Get(bb.Position + sizeof(int) + i)) return false;
-            }
+                if (ident[i] != (char) bb.Get(bb.Position + sizeof(int) + i))
+                    return false;
 
             return true;
         }
@@ -180,12 +169,14 @@ namespace FlatBuffers
             var startPos_1 = offset_1 + sizeof(int);
             var startPos_2 = offset_2 + sizeof(int);
             var len = Math.Min(len_1, len_2);
-            for(int i = 0; i < len; i++) {
-                byte b1 = bb.Get(i + startPos_1);
-                byte b2 = bb.Get(i + startPos_2);
+            for (var i = 0; i < len; i++)
+            {
+                var b1 = bb.Get(i + startPos_1);
+                var b2 = bb.Get(i + startPos_2);
                 if (b1 != b2)
                     return b1 - b2;
             }
+
             return len_1 - len_2;
         }
 
@@ -197,11 +188,13 @@ namespace FlatBuffers
             var len_2 = key.Length;
             var startPos_1 = offset_1 + sizeof(int);
             var len = Math.Min(len_1, len_2);
-            for (int i = 0; i < len; i++) {
-                byte b = bb.Get(i + startPos_1);
+            for (var i = 0; i < len; i++)
+            {
+                var b = bb.Get(i + startPos_1);
                 if (b != key[i])
                     return b - key[i];
             }
+
             return len_1 - len_2;
         }
     }

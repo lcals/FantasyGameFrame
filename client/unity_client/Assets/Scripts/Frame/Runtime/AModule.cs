@@ -4,6 +4,7 @@ namespace Fantasy.Frame
     {
         protected readonly PluginManager PluginManager;
         protected internal readonly bool IsUpdate;
+
         protected AModule(PluginManager pluginManager, bool isUpdate)
         {
             PluginManager = pluginManager;

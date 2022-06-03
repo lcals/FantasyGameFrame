@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Logic.Editor.Version;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Fantasy.Logic.Editor
 {
@@ -21,7 +23,7 @@ namespace Fantasy.Logic.Editor
         {
 #if UNITY_EDITOR_OSX
             var shell = $"{Application.dataPath}/Scripts/Logic/Editor/Config/Tools/mac_gen.sh";
-            System.Diagnostics.Process.Start("/bin/bash", shell);
+            Process.Start("/bin/bash", shell);
             Debug.Log($"Shall_Open : {shell}");
 #endif
         }
@@ -53,7 +55,6 @@ namespace Fantasy.Logic.Editor
             const string cacheDataPath = "Assets/Scripts/Logic/Editor/CacheData/ConfigRoot.json";
             var version = 0;
             if (File.Exists(cacheDataPath))
-            {
                 try
                 {
                     var configRootT = JsonConvert.DeserializeObject<ConfigRootT>(File.ReadAllText(cacheDataPath));
@@ -63,7 +64,6 @@ namespace Fantasy.Logic.Editor
                 {
                     version = 0;
                 }
-            }
 
             var rootT = new ConfigRootT
             {

@@ -8,7 +8,7 @@ namespace Fantasy.Logic
         void Test();
     }
 
-    public class TestModule:AModule,ITestModule
+    public class TestModule : AModule, ITestModule
     {
         public TestModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
@@ -22,18 +22,15 @@ namespace Fantasy.Logic
         public override void Init()
         {
             Debug.Log($"TestModule {nameof(Init)}");
-
         }
 
         public override void AfterInit()
         {
             Debug.Log($"TestModule {nameof(AfterInit)}");
-            
         }
 
         public override void Execute()
         {
-            //Debug.Log(nameof(Execute));
         }
 
         public override void BeforeShut()

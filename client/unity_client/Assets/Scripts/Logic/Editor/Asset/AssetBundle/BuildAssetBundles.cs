@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using Fantasy.Config;
 using Fantasy.HashCacheInfo;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -14,7 +12,6 @@ namespace Fantasy.Logic.Editor
 {
     public static class BuildAssetBundles
     {
-
         [MenuItem("FantasyTools/Asset/BuildAssetBundles/Android")]
         public static void BuildAssetBundlesAndroid()
         {
@@ -62,6 +59,7 @@ namespace Fantasy.Logic.Editor
                 };
                 assetCacheInfoT.BundleDetails.Add(bundleDetailsT);
             }
+
             GenVersion(assetCacheInfoT);
         }
 
@@ -85,11 +83,10 @@ namespace Fantasy.Logic.Editor
             var dic = Path.GetDirectoryName(binPath);
             if (!Directory.Exists(dic) && !string.IsNullOrEmpty(dic)) Directory.CreateDirectory(dic);
             var version = 0;
-           
+
             if (File.Exists(cacheDataPath))
-            {
                 try
-                {  
+                {
                     var oldCacheInfoT = JsonConvert.DeserializeObject<AssetInfoT>(File.ReadAllText(cacheDataPath));
                     if (oldCacheInfoT != null) version = oldCacheInfoT.Version + 1;
                 }
@@ -97,7 +94,7 @@ namespace Fantasy.Logic.Editor
                 {
                     version = 0;
                 }
-            }
+
             assetInfoT.Version = version;
             var newJson = assetInfoT.SerializeToJson();
             File.WriteAllText(cacheDataPath, newJson);
@@ -105,6 +102,5 @@ namespace Fantasy.Logic.Editor
             File.WriteAllBytes(binPath, newBin);
             AssetDatabase.Refresh();
         }
-        
     }
 }

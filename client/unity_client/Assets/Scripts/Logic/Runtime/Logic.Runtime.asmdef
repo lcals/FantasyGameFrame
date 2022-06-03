@@ -1,19 +1,19 @@
 {
-    "name": "Logic.Runtime",
-    "rootNamespace": "",
-    "references": [
-        "GUID:41c72ef3e3a314df5ba96610f8582c6f",
-        "GUID:33661e06c33d31b4c9223810bf503247",
-        "GUID:19622d0c1901810479006eab0c2d3555",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": true,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Logic.Runtime",
+  "rootNamespace": "",
+  "references": [
+    "GUID:41c72ef3e3a314df5ba96610f8582c6f",
+    "GUID:33661e06c33d31b4c9223810bf503247",
+    "GUID:19622d0c1901810479006eab0c2d3555",
+    "GUID:f51ebe6a0ceec4240a699833d6309b23"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

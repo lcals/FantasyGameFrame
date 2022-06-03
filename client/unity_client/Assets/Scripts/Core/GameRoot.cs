@@ -8,7 +8,8 @@ namespace Fantasy.Logic
     {
         private static PluginManager _pluginManager;
 
-        public static bool Successful = false;
+        public static bool Successful;
+
         public static PluginManager GetPluginManager()
         {
             return _pluginManager;
@@ -24,7 +25,6 @@ namespace Fantasy.Logic
             _pluginManager.Awake();
             var test = _pluginManager.FindModule<ITestModule>() as ITestModule;
             test.Test();
-            
         }
 
         private void Start()
@@ -34,7 +34,6 @@ namespace Fantasy.Logic
             "pluginManager AfterInit".ZLogDebug();
             _pluginManager.AfterInit();
             Successful = true;
-
         }
 
         private void Update()

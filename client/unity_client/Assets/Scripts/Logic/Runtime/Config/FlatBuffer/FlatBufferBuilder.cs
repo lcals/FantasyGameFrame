@@ -37,14 +37,19 @@ namespace FlatBuffers
 
         // The vtable for the current table (if _vtableSize >= 0)
         private int[] _vtable = new int[16];
+
         // The size of the vtable. -1 indicates no vtable
         private int _vtableSize = -1;
+
         // Starting offset of the current struct/table.
         private int _objectStart;
+
         // List of offsets of all vtables.
         private int[] _vtables = new int[16];
+
         // Number of entries in `vtables` in use.
         private int _numVtables = 0;
+
         // For the current vector being built.
         private int _vectorNumElems = 0;
 
@@ -90,10 +95,7 @@ namespace FlatBuffers
             _objectStart = 0;
             _numVtables = 0;
             _vectorNumElems = 0;
-            if (_sharedStringMap != null)
-            {
-                _sharedStringMap.Clear();
-            }
+            if (_sharedStringMap != null) _sharedStringMap.Clear();
         }
 
         /// <summary>
@@ -107,16 +109,16 @@ namespace FlatBuffers
 
         /// @cond FLATBUFFERS_INTERNAL
 
-        public int Offset { get { return _bb.Length - _space; } }
+        public int Offset => _bb.Length - _space;
 
         public void Pad(int size)
         {
-             _bb.PutByte(_space -= size, 0, size);
+            _bb.PutByte(_space -= size, 0, size);
         }
 
         // Doubles the size of the ByteBuffer, and copies the old data towards
         // the end of the new buffer (since we build the buffer backwards).
-        void GrowBuffer()
+        private void GrowBuffer()
         {
             _bb.GrowFront(_bb.Length << 1);
         }
@@ -134,28 +136,28 @@ namespace FlatBuffers
             // Find the amount of alignment needed such that `size` is properly
             // aligned after `additional_bytes`
             var alignSize =
-                ((~((int)_bb.Length - _space + additionalBytes)) + 1) &
+                (~((int) _bb.Length - _space + additionalBytes) + 1) &
                 (size - 1);
             // Reallocate the buffer if needed.
             while (_space < alignSize + size + additionalBytes)
             {
-                var oldBufSize = (int)_bb.Length;
+                var oldBufSize = (int) _bb.Length;
                 GrowBuffer();
-                _space += (int)_bb.Length - oldBufSize;
-
+                _space += (int) _bb.Length - oldBufSize;
             }
+
             if (alignSize > 0)
                 Pad(alignSize);
         }
 
         public void PutBool(bool x)
         {
-          _bb.PutByte(_space -= sizeof(byte), (byte)(x ? 1 : 0));
+            _bb.PutByte(_space -= sizeof(byte), (byte) (x ? 1 : 0));
         }
 
         public void PutSbyte(sbyte x)
         {
-          _bb.PutSbyte(_space -= sizeof(sbyte), x);
+            _bb.PutSbyte(_space -= sizeof(sbyte), x);
         }
 
         public void PutByte(byte x)
@@ -170,7 +172,7 @@ namespace FlatBuffers
 
         public void PutUshort(ushort x)
         {
-          _bb.PutUshort(_space -= sizeof(ushort), x);
+            _bb.PutUshort(_space -= sizeof(ushort), x);
         }
 
         public void PutInt(int x)
@@ -180,7 +182,7 @@ namespace FlatBuffers
 
         public void PutUint(uint x)
         {
-          _bb.PutUint(_space -= sizeof(uint), x);
+            _bb.PutUint(_space -= sizeof(uint), x);
         }
 
         public void PutLong(long x)
@@ -190,7 +192,7 @@ namespace FlatBuffers
 
         public void PutUlong(ulong x)
         {
-          _bb.PutUlong(_space -= sizeof(ulong), x);
+            _bb.PutUlong(_space -= sizeof(ulong), x);
         }
 
         public void PutFloat(float x)
@@ -253,67 +255,107 @@ namespace FlatBuffers
         {
             _bb.PutDouble(_space -= sizeof(double), x);
         }
-        /// @endcond
 
+        /// @endcond
         /// <summary>
         /// Add a `bool` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `bool` to add to the buffer.</param>
-        public void AddBool(bool x) { Prep(sizeof(byte), 0); PutBool(x); }
+        public void AddBool(bool x)
+        {
+            Prep(sizeof(byte), 0);
+            PutBool(x);
+        }
 
         /// <summary>
         /// Add a `sbyte` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `sbyte` to add to the buffer.</param>
-        public void AddSbyte(sbyte x) { Prep(sizeof(sbyte), 0); PutSbyte(x); }
+        public void AddSbyte(sbyte x)
+        {
+            Prep(sizeof(sbyte), 0);
+            PutSbyte(x);
+        }
 
         /// <summary>
         /// Add a `byte` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `byte` to add to the buffer.</param>
-        public void AddByte(byte x) { Prep(sizeof(byte), 0); PutByte(x); }
+        public void AddByte(byte x)
+        {
+            Prep(sizeof(byte), 0);
+            PutByte(x);
+        }
 
         /// <summary>
         /// Add a `short` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `short` to add to the buffer.</param>
-        public void AddShort(short x) { Prep(sizeof(short), 0); PutShort(x); }
+        public void AddShort(short x)
+        {
+            Prep(sizeof(short), 0);
+            PutShort(x);
+        }
 
         /// <summary>
         /// Add an `ushort` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `ushort` to add to the buffer.</param>
-        public void AddUshort(ushort x) { Prep(sizeof(ushort), 0); PutUshort(x); }
+        public void AddUshort(ushort x)
+        {
+            Prep(sizeof(ushort), 0);
+            PutUshort(x);
+        }
 
         /// <summary>
         /// Add an `int` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `int` to add to the buffer.</param>
-        public void AddInt(int x) { Prep(sizeof(int), 0); PutInt(x); }
+        public void AddInt(int x)
+        {
+            Prep(sizeof(int), 0);
+            PutInt(x);
+        }
 
         /// <summary>
         /// Add an `uint` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `uint` to add to the buffer.</param>
-        public void AddUint(uint x) { Prep(sizeof(uint), 0); PutUint(x); }
+        public void AddUint(uint x)
+        {
+            Prep(sizeof(uint), 0);
+            PutUint(x);
+        }
 
         /// <summary>
         /// Add a `long` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `long` to add to the buffer.</param>
-        public void AddLong(long x) { Prep(sizeof(long), 0); PutLong(x); }
+        public void AddLong(long x)
+        {
+            Prep(sizeof(long), 0);
+            PutLong(x);
+        }
 
         /// <summary>
         /// Add an `ulong` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `ulong` to add to the buffer.</param>
-        public void AddUlong(ulong x) { Prep(sizeof(ulong), 0); PutUlong(x); }
+        public void AddUlong(ulong x)
+        {
+            Prep(sizeof(ulong), 0);
+            PutUlong(x);
+        }
 
         /// <summary>
         /// Add a `float` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `float` to add to the buffer.</param>
-        public void AddFloat(float x) { Prep(sizeof(float), 0); PutFloat(x); }
+        public void AddFloat(float x)
+        {
+            Prep(sizeof(float), 0);
+            PutFloat(x);
+        }
 
         /// <summary>
         /// Add an array of type T to the buffer (aligns the data and grows if necessary).
@@ -334,23 +376,16 @@ namespace FlatBuffers
         public void Add<T>(ArraySegment<T> x)
             where T : struct
         {
-            if (x == null)
-            {
-                throw new ArgumentNullException("Cannot add a null array");
-            }
+            if (x == null) throw new ArgumentNullException("Cannot add a null array");
 
-            if( x.Count == 0)
-            {
+            if (x.Count == 0)
                 // don't do anything if the array is empty
                 return;
-            }
 
-            if(!ByteBuffer.IsSupportedType<T>())
-            {
+            if (!ByteBuffer.IsSupportedType<T>())
                 throw new ArgumentException("Cannot add this Type array to the builder");
-            }
 
-            int size = ByteBuffer.SizeOf<T>();
+            var size = ByteBuffer.SizeOf<T>();
             // Need to prep on size (for data alignment) and then we pass the
             // rest of the length (minus 1) as additional bytes
             Prep(size, size * (x.Count - 1));
@@ -366,32 +401,22 @@ namespace FlatBuffers
         public void Add<T>(IntPtr ptr, int sizeInBytes)
             where T : struct
         {
-            if(sizeInBytes == 0)
-            {
+            if (sizeInBytes == 0)
                 // don't do anything if the array is empty
                 return;
-            }
 
-            if (ptr == IntPtr.Zero)
-            {
-                throw new ArgumentNullException("Cannot add a null pointer");
-            }
+            if (ptr == IntPtr.Zero) throw new ArgumentNullException("Cannot add a null pointer");
 
-            if(sizeInBytes < 0)
-            {
-                throw new ArgumentOutOfRangeException("sizeInBytes", "sizeInBytes cannot be negative");
-            }
+            if (sizeInBytes < 0) throw new ArgumentOutOfRangeException("sizeInBytes", "sizeInBytes cannot be negative");
 
-            if(!ByteBuffer.IsSupportedType<T>())
-            {
+            if (!ByteBuffer.IsSupportedType<T>())
                 throw new ArgumentException("Cannot add this Type array to the builder");
-            }
 
-            int size = ByteBuffer.SizeOf<T>();
-            if((sizeInBytes % size) != 0)
-            {
-                throw new ArgumentException("The given size in bytes " + sizeInBytes + " doesn't match the element size of T ( " + size + ")", "sizeInBytes");
-            }
+            var size = ByteBuffer.SizeOf<T>();
+            if (sizeInBytes % size != 0)
+                throw new ArgumentException(
+                    "The given size in bytes " + sizeInBytes + " doesn't match the element size of T ( " + size + ")",
+                    "sizeInBytes");
 
             // Need to prep on size (for data alignment) and then we pass the
             // rest of the length (minus 1) as additional bytes
@@ -409,11 +434,9 @@ namespace FlatBuffers
             where T : struct
         {
             if (!ByteBuffer.IsSupportedType<T>())
-            {
                 throw new ArgumentException("Cannot add this Type array to the builder");
-            }
 
-            int size = ByteBuffer.SizeOf<T>();
+            var size = ByteBuffer.SizeOf<T>();
             // Need to prep on size (for data alignment) and then we pass the
             // rest of the length (minus 1) as additional bytes
             Prep(size, size * (x.Length - 1));
@@ -425,8 +448,11 @@ namespace FlatBuffers
         /// Add a `double` to the buffer (aligns the data and grows if necessary).
         /// </summary>
         /// <param name="x">The `double` to add to the buffer.</param>
-        public void AddDouble(double x) { Prep(sizeof(double), 0);
-                                          PutDouble(x); }
+        public void AddDouble(double x)
+        {
+            Prep(sizeof(double), 0);
+            PutDouble(x);
+        }
 
         /// <summary>
         /// Adds an offset, relative to where it will be written.
@@ -434,7 +460,7 @@ namespace FlatBuffers
         /// <param name="off">The offset to add to the buffer.</param>
         public void AddOffset(int off)
         {
-            Prep(sizeof(int), 0);  // Ensure alignment is already done.
+            Prep(sizeof(int), 0); // Ensure alignment is already done.
             if (off > Offset)
                 throw new ArgumentException();
 
@@ -450,8 +476,8 @@ namespace FlatBuffers
             Prep(sizeof(int), elemSize * count);
             Prep(alignment, elemSize * count); // Just in case alignment > int.
         }
-        /// @endcond
 
+        /// @endcond
         /// <summary>
         /// Writes data necessary to finish a vector construction.
         /// </summary>
@@ -469,7 +495,7 @@ namespace FlatBuffers
         {
             NotNested();
             StartVector(sizeof(int), offsets.Length, sizeof(int));
-            for (int i = offsets.Length - 1; i >= 0; i--) AddOffset(offsets[i].Value);
+            for (var i = offsets.Length - 1; i >= 0; i--) AddOffset(offsets[i].Value);
             return EndVector();
         }
 
@@ -525,7 +551,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddBool(int o, bool x, bool d) { if (ForceDefaults || x != d) { AddBool(x); Slot(o); } }
+        public void AddBool(int o, bool x, bool d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddBool(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Boolean to the Table at index `o` in its vtable using the nullable value `x`
@@ -533,9 +566,16 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable boolean value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>       
-        public void AddBool(int o, bool? x) { if (x.HasValue) { AddBool(x.Value); Slot(o); } }
+        public void AddBool(int o, bool? x)
+        {
+            if (x.HasValue)
+            {
+                AddBool(x.Value);
+                Slot(o);
+            }
+        }
 
-        
+
         /// <summary>
         /// Adds a SByte to the Table at index `o` in its vtable using the value `x` and default `d`
         /// </summary>
@@ -543,7 +583,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddSbyte(int o, sbyte x, sbyte d) { if (ForceDefaults || x != d) { AddSbyte(x); Slot(o); } }
+        public void AddSbyte(int o, sbyte x, sbyte d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddSbyte(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a SByte to the Table at index `o` in its vtable using the nullable value `x`
@@ -551,7 +598,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable sbyte value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddSbyte(int o, sbyte? x) { if (x.HasValue) { AddSbyte(x.Value); Slot(o); } }
+        public void AddSbyte(int o, sbyte? x)
+        {
+            if (x.HasValue)
+            {
+                AddSbyte(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Byte to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -560,7 +614,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddByte(int o, byte x, byte d) { if (ForceDefaults || x != d) { AddByte(x); Slot(o); } }
+        public void AddByte(int o, byte x, byte d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddByte(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Byte to the Table at index `o` in its vtable using the nullable value `x`
@@ -568,7 +629,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable byte value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddByte(int o, byte? x) { if (x.HasValue) { AddByte(x.Value); Slot(o); } }
+        public void AddByte(int o, byte? x)
+        {
+            if (x.HasValue)
+            {
+                AddByte(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Int16 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -577,7 +645,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddShort(int o, short x, int d) { if (ForceDefaults || x != d) { AddShort(x); Slot(o); } }
+        public void AddShort(int o, short x, int d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddShort(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Int16 to the Table at index `o` in its vtable using the nullable value `x`
@@ -585,7 +660,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable int16 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddShort(int o, short? x) { if (x.HasValue) { AddShort(x.Value); Slot(o); } }
+        public void AddShort(int o, short? x)
+        {
+            if (x.HasValue)
+            {
+                AddShort(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a UInt16 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -594,7 +676,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddUshort(int o, ushort x, ushort d) { if (ForceDefaults || x != d) { AddUshort(x); Slot(o); } }
+        public void AddUshort(int o, ushort x, ushort d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddUshort(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Uint16 to the Table at index `o` in its vtable using the nullable value `x`
@@ -602,7 +691,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable uint16 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddUshort(int o, ushort? x) { if (x.HasValue) { AddUshort(x.Value); Slot(o); } }
+        public void AddUshort(int o, ushort? x)
+        {
+            if (x.HasValue)
+            {
+                AddUshort(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds an Int32 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -611,7 +707,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddInt(int o, int x, int d) { if (ForceDefaults || x != d) { AddInt(x); Slot(o); } }
+        public void AddInt(int o, int x, int d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddInt(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Int32 to the Table at index `o` in its vtable using the nullable value `x`
@@ -619,7 +722,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable int32 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddInt(int o, int? x) { if (x.HasValue) { AddInt(x.Value); Slot(o); } }
+        public void AddInt(int o, int? x)
+        {
+            if (x.HasValue)
+            {
+                AddInt(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a UInt32 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -628,7 +738,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddUint(int o, uint x, uint d) { if (ForceDefaults || x != d) { AddUint(x); Slot(o); } }
+        public void AddUint(int o, uint x, uint d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddUint(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a UInt32 to the Table at index `o` in its vtable using the nullable value `x`
@@ -636,7 +753,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable uint32 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddUint(int o, uint? x) { if (x.HasValue) { AddUint(x.Value); Slot(o); } }
+        public void AddUint(int o, uint? x)
+        {
+            if (x.HasValue)
+            {
+                AddUint(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds an Int64 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -645,7 +769,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddLong(int o, long x, long d) { if (ForceDefaults || x != d) { AddLong(x); Slot(o); } }
+        public void AddLong(int o, long x, long d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddLong(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Int64 to the Table at index `o` in its vtable using the nullable value `x`
@@ -653,7 +784,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable int64 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddLong(int o, long? x) { if (x.HasValue) { AddLong(x.Value); Slot(o); } }
+        public void AddLong(int o, long? x)
+        {
+            if (x.HasValue)
+            {
+                AddLong(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a UInt64 to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -662,7 +800,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddUlong(int o, ulong x, ulong d) { if (ForceDefaults || x != d) { AddUlong(x); Slot(o); } }
+        public void AddUlong(int o, ulong x, ulong d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddUlong(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a UInt64 to the Table at index `o` in its vtable using the nullable value `x`
@@ -670,7 +815,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable int64 value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddUlong(int o, ulong? x) { if (x.HasValue) { AddUlong(x.Value); Slot(o); } }
+        public void AddUlong(int o, ulong? x)
+        {
+            if (x.HasValue)
+            {
+                AddUlong(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Single to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -679,7 +831,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddFloat(int o, float x, double d) { if (ForceDefaults || x != d) { AddFloat(x); Slot(o); } }
+        public void AddFloat(int o, float x, double d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddFloat(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Single to the Table at index `o` in its vtable using the nullable value `x`
@@ -687,7 +846,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable single value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddFloat(int o, float? x) { if (x.HasValue) { AddFloat(x.Value); Slot(o); } }
+        public void AddFloat(int o, float? x)
+        {
+            if (x.HasValue)
+            {
+                AddFloat(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Double to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -696,7 +862,14 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddDouble(int o, double x, double d) { if (ForceDefaults || x != d) { AddDouble(x); Slot(o); } }
+        public void AddDouble(int o, double x, double d)
+        {
+            if (ForceDefaults || x != d)
+            {
+                AddDouble(x);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a Double to the Table at index `o` in its vtable using the nullable value `x`
@@ -704,7 +877,14 @@ namespace FlatBuffers
         /// <param name="o">The index into the vtable</param>
         /// <param name="x">The nullable double value to put into the buffer. If it doesn't have a value
         /// it will skip writing to the buffer.</param>  
-        public void AddDouble(int o, double? x) { if (x.HasValue) { AddDouble(x.Value); Slot(o); } }
+        public void AddDouble(int o, double? x)
+        {
+            if (x.HasValue)
+            {
+                AddDouble(x.Value);
+                Slot(o);
+            }
+        }
 
         /// <summary>
         /// Adds a buffer offset to the Table at index `o` in its vtable using the value `x` and default `d`
@@ -713,9 +893,16 @@ namespace FlatBuffers
         /// <param name="x">The value to put into the buffer. If the value is equal to the default
         /// the value will be skipped.</param>
         /// <param name="d">The default value to compare the value against</param>
-        public void AddOffset(int o, int x, int d) { if (x != d) { AddOffset(x); Slot(o); } }
-        /// @endcond
+        public void AddOffset(int o, int x, int d)
+        {
+            if (x != d)
+            {
+                AddOffset(x);
+                Slot(o);
+            }
+        }
 
+        /// @endcond
         /// <summary>
         /// Encode the string `s` in the buffer using UTF-8.
         /// </summary>
@@ -725,10 +912,7 @@ namespace FlatBuffers
         /// </returns>
         public StringOffset CreateString(string s)
         {
-            if (s == null)
-            {
-                return new StringOffset(0);
-            }
+            if (s == null) return new StringOffset(0);
             NotNested();
             AddByte(0);
             var utf8StringLen = Encoding.UTF8.GetByteCount(s);
@@ -769,20 +953,11 @@ namespace FlatBuffers
         /// </returns>
         public StringOffset CreateSharedString(string s)
         {
-            if (s == null)
-            {
-              return new StringOffset(0);
-            }
+            if (s == null) return new StringOffset(0);
 
-            if (_sharedStringMap == null)
-            {
-                _sharedStringMap = new Dictionary<string, StringOffset>();
-            }
+            if (_sharedStringMap == null) _sharedStringMap = new Dictionary<string, StringOffset>();
 
-            if (_sharedStringMap.ContainsKey(s))
-            {
-                return _sharedStringMap[s];
-            }
+            if (_sharedStringMap.ContainsKey(s)) return _sharedStringMap[s];
 
             var stringOffset = CreateString(s);
             _sharedStringMap.Add(s, stringOffset);
@@ -805,20 +980,24 @@ namespace FlatBuffers
         {
             if (_vtableSize < 0)
                 throw new InvalidOperationException(
-                  "Flatbuffers: calling EndTable without a StartTable");
+                    "Flatbuffers: calling EndTable without a StartTable");
 
-            AddInt((int)0);
+            AddInt((int) 0);
             var vtableloc = Offset;
             // Write out the current vtable.
-            int i = _vtableSize - 1;
+            var i = _vtableSize - 1;
             // Trim trailing zeroes.
-            for (; i >= 0 && _vtable[i] == 0; i--) {}
-            int trimmedSize = i + 1;
-            for (; i >= 0 ; i--) {
+            for (; i >= 0 && _vtable[i] == 0; i--)
+            {
+            }
+
+            var trimmedSize = i + 1;
+            for (; i >= 0; i--)
+            {
                 // Offset relative to the start of the table.
-                short off = (short)(_vtable[i] != 0
-                                        ? vtableloc - _vtable[i]
-                                        : 0);
+                var off = (short) (_vtable[i] != 0
+                    ? vtableloc - _vtable[i]
+                    : 0);
                 AddShort(off);
 
                 // clear out written entry
@@ -826,47 +1005,54 @@ namespace FlatBuffers
             }
 
             const int standardFields = 2; // The fields below:
-            AddShort((short)(vtableloc - _objectStart));
-            AddShort((short)((trimmedSize + standardFields) *
-                             sizeof(short)));
+            AddShort((short) (vtableloc - _objectStart));
+            AddShort((short) ((trimmedSize + standardFields) *
+                              sizeof(short)));
 
             // Search for an existing vtable that matches the current one.
-            int existingVtable = 0;
-            for (i = 0; i < _numVtables; i++) {
-                int vt1 = _bb.Length - _vtables[i];
-                int vt2 = _space;
-                short len = _bb.GetShort(vt1);
-                if (len == _bb.GetShort(vt2)) {
-                    for (int j = sizeof(short); j < len; j += sizeof(short)) {
-                        if (_bb.GetShort(vt1 + j) != _bb.GetShort(vt2 + j)) {
+            var existingVtable = 0;
+            for (i = 0; i < _numVtables; i++)
+            {
+                var vt1 = _bb.Length - _vtables[i];
+                var vt2 = _space;
+                var len = _bb.GetShort(vt1);
+                if (len == _bb.GetShort(vt2))
+                {
+                    for (var j = sizeof(short); j < len; j += sizeof(short))
+                        if (_bb.GetShort(vt1 + j) != _bb.GetShort(vt2 + j))
                             goto endLoop;
-                        }
-                    }
                     existingVtable = _vtables[i];
                     break;
                 }
 
-                endLoop: { }
+                endLoop:
+                {
+                }
             }
 
-            if (existingVtable != 0) {
+            if (existingVtable != 0)
+            {
                 // Found a match:
                 // Remove the current vtable.
                 _space = _bb.Length - vtableloc;
                 // Point table to existing vtable.
                 _bb.PutInt(_space, existingVtable - vtableloc);
-            } else {
+            }
+            else
+            {
                 // No match:
                 // Add the location of the current vtable to the list of
                 // vtables.
                 if (_numVtables == _vtables.Length)
                 {
                     // Arrays.CopyOf(vtables num_vtables * 2);
-                    var newvtables = new int[ _numVtables * 2];
+                    var newvtables = new int[_numVtables * 2];
                     Array.Copy(_vtables, newvtables, _vtables.Length);
 
                     _vtables = newvtables;
-                };
+                }
+
+                ;
                 _vtables[_numVtables++] = Offset;
                 // Point table to current vtable.
                 _bb.PutInt(_bb.Length - vtableloc, Offset - vtableloc);
@@ -880,16 +1066,16 @@ namespace FlatBuffers
         // just been constructed.
         public void Required(int table, int field)
         {
-          int table_start = _bb.Length - table;
-          int vtable_start = table_start - _bb.GetInt(table_start);
-          bool ok = _bb.GetShort(vtable_start + field) != 0;
-          // If this fails, the caller will show what field needs to be set.
-          if (!ok)
-            throw new InvalidOperationException("FlatBuffers: field " + field +
-                                                " must be set");
+            var table_start = _bb.Length - table;
+            var vtable_start = table_start - _bb.GetInt(table_start);
+            var ok = _bb.GetShort(vtable_start + field) != 0;
+            // If this fails, the caller will show what field needs to be set.
+            if (!ok)
+                throw new InvalidOperationException("FlatBuffers: field " + field +
+                                                    " must be set");
         }
-        /// @endcond
 
+        /// @endcond
         /// <summary>
         /// Finalize a buffer, pointing to the given `root_table`.
         /// </summary>
@@ -903,9 +1089,7 @@ namespace FlatBuffers
         {
             Prep(_minAlign, sizeof(int) + (sizePrefix ? sizeof(int) : 0));
             AddOffset(rootTable);
-            if (sizePrefix) {
-                AddInt(_bb.Length - _space);
-            }
+            if (sizePrefix) AddInt(_bb.Length - _space);
             _bb.Position = _space;
         }
 
@@ -942,7 +1126,7 @@ namespace FlatBuffers
         /// <returns>
         /// Returns the ByteBuffer for this FlatBuffer.
         /// </returns>
-        public ByteBuffer DataBuffer { get { return _bb; } }
+        public ByteBuffer DataBuffer => _bb;
 
         /// <summary>
         /// A utility function to copy and return the ByteBuffer data as a
@@ -979,11 +1163,10 @@ namespace FlatBuffers
                     "FlatBuffers: file identifier must be length " +
                     FlatBufferConstants.FileIdentifierLength,
                     "fileIdentifier");
-            for (int i = FlatBufferConstants.FileIdentifierLength - 1; i >= 0;
+            for (var i = FlatBufferConstants.FileIdentifierLength - 1;
+                 i >= 0;
                  i--)
-            {
-               AddByte((byte)fileIdentifier[i]);
-            }
+                AddByte((byte) fileIdentifier[i]);
             Finish(rootTable, sizePrefix);
         }
 

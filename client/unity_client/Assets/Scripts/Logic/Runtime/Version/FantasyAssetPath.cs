@@ -7,8 +7,8 @@ namespace Fantasy.Logic.Achieve
     {
         public static string LocalResourceDirectory;
         public static string CacheResourceDirectory;
-        
-        public  static void Init()
+
+        public static void Init()
         {
             switch (Application.platform)
             {

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -13,13 +13,13 @@ namespace Fantasy.Frame
         private readonly Dictionary<string, AModule> _modules = new();
         private AModule[] _updates = Array.Empty<AModule>();
         private bool _isAwakeEnd;
+
         public PluginManager(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
-            
         }
+
         public override void Awake()
         {
-
             _updates = _modules.Values.Where(x => x.IsUpdate).ToArray();
             _isAwakeEnd = true;
             foreach (var plugin in _plugins.Values) plugin.Awake();
@@ -53,61 +53,56 @@ namespace Fantasy.Frame
         }
 
 
-        public  void Registered(APlugin plugin)
+        public void Registered(APlugin plugin)
         {
             _plugins.Add(plugin.GetPluginName(), plugin);
             plugin.Install();
         }
 
-        public  void UnRegistered(APlugin plugin)
+        public void UnRegistered(APlugin plugin)
         {
             _plugins.Remove(plugin.GetPluginName());
             plugin.Uninstall();
         }
-        
-        public  long GetInitTime()
+
+        public long GetInitTime()
         {
             return _initTime;
         }
 
-        public  long GetNowTime()
+        public long GetNowTime()
         {
             return _nowTicks;
         }
-        
-        public  void AddModule(string moduleName, AModule module)
+
+        public void AddModule(string moduleName, AModule module)
         {
             _modules.Add(moduleName, module);
-            if (_isAwakeEnd)
-            {
-                _updates = _modules.Values.ToArray();  
-            }
+            if (_isAwakeEnd) _updates = _modules.Values.ToArray();
         }
-        
-        public void RemoveModule<T>() 
+
+        public void RemoveModule<T>()
         {
             RemoveModule(typeof(T).ToString());
         }
-        public AModule FindModule<T>() 
+
+        public AModule FindModule<T>()
         {
-            return  FindModule(typeof(T).ToString());
+            return FindModule(typeof(T).ToString());
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public  void RemoveModule(string moduleName)
+        public void RemoveModule(string moduleName)
         {
             var cur = _modules[moduleName];
             _modules.Remove(moduleName);
             if (cur.IsUpdate) _updates = _modules.Values.ToArray();
         }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public AModule FindModule(string moduleName)
+        private AModule FindModule(string moduleName)
         {
             return _modules.TryGetValue(moduleName, out var module) ? module : null;
         }
-        
-   
-
-
     }
 }

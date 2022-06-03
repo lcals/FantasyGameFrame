@@ -3,51 +3,17 @@ using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using Fantasy.Logic;
 using Fantasy.Logic.Interface;
-using TMPro;
+using Fantasy.UI.Gen;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Fantasy.UI
 {
-    public class GameRootUiElements : IMappedObject
-    {
-        public IMapper Mapper { get; private set; }
-        public GameObject Root { get; private set; }
-        public Button StartGameButton { get; private set; }
-        public TextMeshProUGUI StartGameButtonButtonText { get; private set; }
-        public TextMeshProUGUI VersionTitle { get; private set; }
-        public Button UpdateGameButton { get; private set; }
-        public TextMeshProUGUI UpdateGameButtonButtonText { get; private set; }
-
-        public GameRootUiElements()
-        {
-        }
-
-        public GameRootUiElements(IMapper mapper)
-        {
-            Initialize(mapper);
-        }
-
-        public void Initialize(IMapper mapper)
-        {
-            Mapper = mapper;
-            Root = mapper.Get();
-            StartGameButton = mapper.Get<Button>("StartGameButton");
-            StartGameButtonButtonText = mapper.Get<TextMeshProUGUI>("StartGameButton/ButtonText");
-            VersionTitle = mapper.Get<TextMeshProUGUI>("VersionTitle");
-            UpdateGameButton = mapper.Get<Button>("UpdateGameButton");
-            UpdateGameButtonButtonText = mapper.Get<TextMeshProUGUI>("UpdateGameButton/ButtonText");
-        }
-    }
-
-
     public class UIGameRoot : MonoBehaviour
     {
         private void Awake()
         {
             GameRootFlow().Forget();
         }
-
 
         private async UniTask GameRootFlow()
         {
@@ -63,9 +29,7 @@ namespace Fantasy.UI
             await UniTask.WaitUntil(() => GameRoot.Successful);
             var pluginManager = GameRoot.GetPluginManager();
             if (pluginManager.FindModule<IFantasyVersionModule>() is not IFantasyVersionModule fantasyVersionModule)
-            {
                 return;
-            }
             await UniTask.WaitUntil(() => fantasyVersionModule.GetInitSuccessful());
             var oldVersion = fantasyVersionModule.GetOldVersionInfoT();
             if (oldVersion.Update)
@@ -77,6 +41,7 @@ namespace Fantasy.UI
                     gameRootUiElements.VersionTitle.text = oldVersion.TotalVersion.ToString();
                     return;
                 }
+
                 gameRootUiElements.VersionTitle.text = ZString.Format("{0} -> {1}", oldVersion.TotalVersion.ToString(),
                     newVersion.TotalVersion.ToString());
                 gameRootUiElements.UpdateGameButton.gameObject.SetActive(true);
@@ -89,8 +54,5 @@ namespace Fantasy.UI
                 gameRootUiElements.VersionTitle.text = oldVersion.TotalVersion.ToString();
             }
         }
-
-      
     }
 }
-

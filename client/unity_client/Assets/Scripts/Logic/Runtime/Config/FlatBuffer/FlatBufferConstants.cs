@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace FlatBuffers
 {
     public static class FlatBufferConstants
     {
         public const int FileIdentifierLength = 4;
         public const int SizePrefixLength = 4;
+
         /** A version identifier to force a compile error if someone
         accidentally tries to build generated code with a runtime of
         two mismatched version. Versions need to always match, as
@@ -32,6 +28,8 @@ namespace FlatBuffers
         Changes to the C# implementation need to be sure to change
         the version here and in the code generator on every possible
         incompatible change */
-        public static void FLATBUFFERS_2_0_0() {}
+        public static void FLATBUFFERS_2_0_0()
+        {
+        }
     }
 }
