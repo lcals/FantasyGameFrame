@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "bundle_details": [
+    {
+      "file_name": "asset/uiprefabs/gameroot.prefab",
+      "crc": "2512361639",
+      "hash": "4fb82821cc8446ebd0b8c7a003a05538",
+      "dependencies": []
+    },
+    {
+      "file_name": "asset/uiprefabs/gameroot/meta.prefab",
+      "crc": "2569516529",
+      "hash": "df24b3282b27d9a21c12d17e03172cfa",
+      "dependencies": []
+    }
+  ]
+}

@@ -26,7 +26,7 @@ namespace Fantasy.Logic.Achieve
             InitLog();
         }
 
-        private void InitLog()
+        private static void InitLog()
         {
             _loggerFactory = UnityLoggerFactory.Create(builder =>
             {

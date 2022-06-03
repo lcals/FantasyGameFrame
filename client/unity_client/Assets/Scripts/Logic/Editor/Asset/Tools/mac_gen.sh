@@ -7,4 +7,4 @@ for dir_del in $dir/* ; do
   rm -rf $dir_del
  fi
 done
-./flatc  --csharp   --csharp --cs-gen-json-serializer  --gen-object-api    -o ./../../../Runtime/Asset/Gen  ./../Fbs/VersionInfo.fbs
+./flatc  --csharp   --csharp --cs-gen-json-serializer  --gen-object-api    -o ./../Gen  ./../Fbs/AssetCacheInfo.fbs

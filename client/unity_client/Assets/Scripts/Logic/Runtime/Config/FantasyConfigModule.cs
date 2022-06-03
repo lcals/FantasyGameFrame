@@ -1,9 +1,14 @@
+using System;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Text;
+using Cysharp.Threading.Tasks;
 using Fantasy.Config;
 using Fantasy.Frame;
 using Fantasy.Logic.Interface;
 using Microsoft.Extensions.Logging;
-using UnityEngine;
 using ZLogger;
 using Debug = System.Diagnostics.Debug;
 
@@ -13,10 +18,37 @@ namespace Fantasy.Logic.Achieve
     {
         private IFantasyLogModule _fantasyLogModule;
         private ILogger<FantasyConfigModule> _logger;
+        
+        private const string ConfigPath = "config/config.bytes";
+        
         public FantasyConfigModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
             
         }
+        
+        public async UniTask UpdateData(string url)
+        {
+            var  fullUrl = ZString.Concat(url, ConfigPath);
+            try
+            {
+                var cts = new CancellationTokenSource();
+                cts.CancelAfterSlim(TimeSpan.FromSeconds(5));
+                using var client = new HttpClient();
+                _logger.ZLogDebug("ConfigPath url : \n{0}", fullUrl);
+                var response = await client.GetAsync(fullUrl, cts.Token);
+                response.EnsureSuccessStatusCode();
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                LoadData(bytes);
+
+            }
+            catch (TaskCanceledException)
+            {
+                _logger.ZLogError("Request timed out {0}", fullUrl);
+            }
+        }
+
+        #region Help
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void LoadData(byte[] bytes)
         {
@@ -24,10 +56,7 @@ namespace Fantasy.Logic.Achieve
             _logger.ZLogDebug("ConfigRootT.Version {0}", Config.ConfigRootT.Version.ToString());
         }
 
-        public void UpdateData()
-        {
-            
-        }
+        #endregion
         
         #region 
 

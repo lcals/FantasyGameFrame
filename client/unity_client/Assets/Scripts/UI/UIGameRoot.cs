@@ -2,7 +2,7 @@ using AnKuchen.Map;
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using Fantasy.Logic;
-using Fantasy.Logic.Achieve;
+using Fantasy.Logic.Interface;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +19,14 @@ namespace Fantasy.UI
         public Button UpdateGameButton { get; private set; }
         public TextMeshProUGUI UpdateGameButtonButtonText { get; private set; }
 
-        public GameRootUiElements() { }
-        public GameRootUiElements(IMapper mapper) { Initialize(mapper); }
+        public GameRootUiElements()
+        {
+        }
+
+        public GameRootUiElements(IMapper mapper)
+        {
+            Initialize(mapper);
+        }
 
         public void Initialize(IMapper mapper)
         {
@@ -42,7 +48,7 @@ namespace Fantasy.UI
             GameRootFlow().Forget();
         }
 
-        
+
         private async UniTask GameRootFlow()
         {
             var gameRootUICache = GetComponent<UICache>();
@@ -56,26 +62,26 @@ namespace Fantasy.UI
             gameRootUiElements.UpdateGameButton.gameObject.SetActive(false);
             await UniTask.WaitUntil(() => GameRoot.Successful);
             var pluginManager = GameRoot.GetPluginManager();
-            if (pluginManager.FindModule<IFantasyAssetModule>() is not IFantasyAssetModule iAsset)
+            if (pluginManager.FindModule<IFantasyVersionModule>() is not IFantasyVersionModule fantasyVersionModule)
             {
                 return;
             }
-            await UniTask.WaitUntil(() => iAsset.GetInitSuccessful());
-            var oldVersion = iAsset.GetOLdVersionInfoT();
+            await UniTask.WaitUntil(() => fantasyVersionModule.GetInitSuccessful());
+            var oldVersion = fantasyVersionModule.GetOldVersionInfoT();
             if (oldVersion.Update)
             {
-                await UniTask.WaitUntil(() => iAsset.GetUpdateSuccessful());
-                var newVersion = iAsset.GetNewVersionInfoT();
-                if (oldVersion.TotalVersion==newVersion.TotalVersion)
+                await UniTask.WaitUntil(() => fantasyVersionModule.GetUpdateSuccessful());
+                var newVersion = fantasyVersionModule.GetNewVersionInfoT();
+                if (oldVersion.TotalVersion == newVersion.TotalVersion)
                 {
                     gameRootUiElements.VersionTitle.text = oldVersion.TotalVersion.ToString();
                     return;
                 }
-                gameRootUiElements.VersionTitle.text = ZString.Format("{0} -> {1}",oldVersion.TotalVersion.ToString(),
+                gameRootUiElements.VersionTitle.text = ZString.Format("{0} -> {1}", oldVersion.TotalVersion.ToString(),
                     newVersion.TotalVersion.ToString());
                 gameRootUiElements.UpdateGameButton.gameObject.SetActive(true);
                 await gameRootUiElements.UpdateGameButton.OnClickAsync();
-                iAsset.StartUpdate();
+                fantasyVersionModule.StartUpdate();
                 gameRootUiElements.UpdateGameButton.gameObject.SetActive(false);
             }
             else
@@ -83,5 +89,8 @@ namespace Fantasy.UI
                 gameRootUiElements.VersionTitle.text = oldVersion.TotalVersion.ToString();
             }
         }
+
+      
     }
 }
+

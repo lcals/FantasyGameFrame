@@ -7,6 +7,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Fantasy.Config;
+using Logic.Editor.Version;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
@@ -24,40 +25,31 @@ namespace Fantasy.Logic.Editor
             Debug.Log($"Shall_Open : {shell}");
 #endif
         }
-        
-        [MenuItem("FantasyTools/Config/GenerateDataCsv")]
-        public static void GenerateDataCsv()
+
+        [MenuItem("FantasyTools/Config/UpdateCsv")]
+        public static void UpdateCsv()
         {
             var items = ReaderRecords<ItemT>(nameof(ItemT));
-            if (items.Count == 0)
-            {
-                items.Add(new ItemT());
-            }
+            if (items.Count == 0) items.Add(new ItemT());
             WriteRecords(items, nameof(ItemT));
             var roles = ReaderRecords<RoleT>(nameof(RoleT));
-            if (roles.Count == 0)
-            {
-                roles.Add(new RoleT());
-            }
+            if (roles.Count == 0) roles.Add(new RoleT());
             WriteRecords(roles, nameof(RoleT));
         }
 
         [MenuItem("FantasyTools/Config/GenerateDataBytes")]
         public static void GenerateDataBin()
         {
-            var binPath = $"{FantasyAssetModuleEditor.AssetDirectory}/Config/config.bytes";
-            GenerateDataCsv();
+            var binPath = $"{FantasyAssetPathEditor.LocalResourceDirectory}config/config.bytes";
+            UpdateCsv();
             GenerateDataBin(binPath);
-            FantasyAssetModuleEditor.AddDataVersion();
+            FantasyVersionModuleEditor.AddDataVersion();
         }
 
         private static void GenerateDataBin(string binPath)
         {
             var dic = Path.GetDirectoryName(binPath);
-            if (!Directory.Exists(dic)&&!string.IsNullOrEmpty(dic))
-            { 
-                Directory.CreateDirectory(dic);
-            }
+            if (!Directory.Exists(dic) && !string.IsNullOrEmpty(dic)) Directory.CreateDirectory(dic);
             const string cacheDataPath = "Assets/Scripts/Logic/Editor/CacheData/ConfigRoot.json";
             var version = 0;
             if (File.Exists(cacheDataPath))
@@ -65,35 +57,33 @@ namespace Fantasy.Logic.Editor
                 try
                 {
                     var configRootT = JsonConvert.DeserializeObject<ConfigRootT>(File.ReadAllText(cacheDataPath));
-                    if (configRootT != null) version = configRootT.Version+1;
+                    if (configRootT != null) version = configRootT.Version + 1;
                 }
                 catch (Exception)
                 {
                     version = 0;
                 }
             }
+
             var rootT = new ConfigRootT
             {
                 Version = version,
-                OutputTime=DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                OutputTime = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                 Item = ReaderRecords<ItemT>(nameof(ItemT)),
                 Role = ReaderRecords<RoleT>(nameof(RoleT))
             };
             var newJson = rootT.SerializeToJson();
-            File.WriteAllText(cacheDataPath,newJson);
+            File.WriteAllText(cacheDataPath, newJson);
             var newBin = rootT.SerializeToBinary();
-            File.WriteAllBytes(binPath,newBin);
+            File.WriteAllBytes(binPath, newBin);
             AssetDatabase.Refresh();
         }
 
-        
+
         private static List<T> ReaderRecords<T>(string path)
         {
             path = $"{Application.dataPath}/../../../config/{path}.csv";
-            if (!File.Exists(path))
-            {
-                return new List<T>();
-            }
+            if (!File.Exists(path)) return new List<T>();
             using var writer = new StreamReader(path);
             using var csv = new CsvReader(writer, CultureInfo.InvariantCulture);
             csv.AddConverter();
@@ -110,17 +100,19 @@ namespace Fantasy.Logic.Editor
             csv.AddConverter();
             csv.WriteRecords(records);
         }
+
         private static void AddConverter(this IReaderRow csv)
         {
             csv.Context.TypeConverterCache.AddConverter<List<int>>(new JsonConverter<List<int>>());
             csv.Context.TypeConverterCache.AddConverter<List<string>>(new JsonConverter<List<string>>());
-
         }
+
         private static void AddConverter(this IWriterRow csv)
         {
             csv.Context.TypeConverterCache.AddConverter<List<int>>(new JsonConverter<List<int>>());
             csv.Context.TypeConverterCache.AddConverter<List<string>>(new JsonConverter<List<string>>());
         }
+
         private class JsonConverter<T> : ITypeConverter
         {
             public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)

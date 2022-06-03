@@ -19,6 +19,7 @@ namespace Fantasy.Logic
         public override void Install()
         {
             AddModule<IFantasyLogModule>(new FantasyLogModule(PluginManager,false));
+            AddModule<IFantasyVersionModule>(new FantasyVersionModule(PluginManager,false));
             AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager,true));
             AddModule<IFantasyAssetModule>(new FantasyAssetModule(PluginManager,true));
         }
@@ -27,6 +28,7 @@ namespace Fantasy.Logic
         {
             RemoveModule<IFantasyAssetModule>();
             RemoveModule<IFantasyConfigModule>();
+            RemoveModule<IFantasyVersionModule>();
             RemoveModule<IFantasyLogModule>();
            
         }

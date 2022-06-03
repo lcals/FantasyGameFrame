@@ -1,8 +1,10 @@
+using Cysharp.Threading.Tasks;
+
 namespace Fantasy.Logic.Interface
 {
     public interface IFantasyConfigModule
     {
         void LoadData(byte[] bytes);
-        void UpdateData();
+         UniTask UpdateData(string url);
     }
 }
