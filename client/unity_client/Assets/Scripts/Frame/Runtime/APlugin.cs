@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Fantasy.Frame
 {
@@ -51,19 +50,13 @@ namespace Fantasy.Frame
             _modules.Add(moduleName, module);
             PluginManager.AddModule(moduleName, module);
         }
-
         public void RemoveModule<T>()
         {
             var moduleName = typeof(T).ToString();
-            RemoveModule(moduleName);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void RemoveModule(string moduleName)
-        {
             if (!_modules.ContainsKey(moduleName)) return;
             _modules.Remove(moduleName);
             PluginManager.RemoveModule(moduleName);
         }
+
     }
 }

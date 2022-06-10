@@ -51,8 +51,7 @@ namespace Fantasy.Frame
         {
             foreach (var plugin in _plugins.Values) plugin?.Shut();
         }
-
-
+        
         public void Registered(APlugin plugin)
         {
             _plugins.Add(plugin.GetPluginName(), plugin);
@@ -78,31 +77,21 @@ namespace Fantasy.Frame
         public void AddModule(string moduleName, AModule module)
         {
             _modules.Add(moduleName, module);
-            if (_isAwakeEnd) _updates = _modules.Values.ToArray();
+            if (_isAwakeEnd&&module.IsUpdate) _updates = _modules.Values.ToArray();
         }
-
-        public void RemoveModule<T>()
-        {
-            RemoveModule(typeof(T).ToString());
-        }
-
-        public AModule FindModule<T>()
-        {
-            return FindModule(typeof(T).ToString());
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveModule(string moduleName)
         {
-            var cur = _modules[moduleName];
+            var module = _modules[moduleName];
             _modules.Remove(moduleName);
-            if (cur.IsUpdate) _updates = _modules.Values.ToArray();
+            if (module.IsUpdate) _updates = _modules.Values.ToArray();
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private AModule FindModule(string moduleName)
+        public AModule FindModule<T>()
         {
+            var moduleName = typeof(T).ToString();
             return _modules.TryGetValue(moduleName, out var module) ? module : null;
         }
+
+       
     }
 }

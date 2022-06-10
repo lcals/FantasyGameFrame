@@ -18,7 +18,6 @@ namespace Fantasy.Logic.Interface
     {
         private IFantasyLogModule _fantasyLogModule;
         private IFantasyConfigModule _fantasyConfigModule;
-        private IFantasyAssetModule _fantasyAssetModule;
         private ILogger<FantasyVersionModule> _logger;
         private VersionInfoT _oldVersionInfoT;
         private VersionInfoT _newVersionInfoT;
@@ -45,7 +44,6 @@ namespace Fantasy.Logic.Interface
         {
             _fantasyLogModule = PluginManager.FindModule<IFantasyLogModule>() as FantasyLogModule;
             _fantasyConfigModule = PluginManager.FindModule<IFantasyConfigModule>() as IFantasyConfigModule;
-            _fantasyAssetModule = PluginManager.FindModule<IFantasyAssetModule>() as IFantasyAssetModule;
             Debug.Assert(_fantasyLogModule != null, nameof(_fantasyLogModule) + " != null");
             _logger = _fantasyLogModule.GetLogger<FantasyVersionModule>();
             _logger.ZLogDebug("{0}   Awake", nameof(FantasyVersionModule));
@@ -119,8 +117,10 @@ namespace Fantasy.Logic.Interface
 
         private async UniTask UpdateAssetBundleAsync()
         {
+           
             if (_oldVersionInfoT.AssetVersion != _newVersionInfoT.AssetVersion)
-                await _fantasyAssetModule.UpdateData(_oldVersionInfoT.Url);
+                await UniTask.Delay(0);
+            
         }
 
         public VersionInfoT GetOldVersionInfoT()

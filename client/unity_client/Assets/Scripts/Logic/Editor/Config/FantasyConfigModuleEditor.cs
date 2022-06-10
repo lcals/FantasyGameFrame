@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -34,9 +35,12 @@ namespace Fantasy.Logic.Editor
             var items = ReaderRecords<ItemT>(nameof(ItemT));
             if (items.Count == 0) items.Add(new ItemT());
             WriteRecords(items, nameof(ItemT));
+            
+            
             var roles = ReaderRecords<RoleT>(nameof(RoleT));
             if (roles.Count == 0) roles.Add(new RoleT());
             WriteRecords(roles, nameof(RoleT));
+            
         }
 
         [MenuItem("FantasyTools/Config/GenerateDataBytes")]
@@ -73,7 +77,7 @@ namespace Fantasy.Logic.Editor
                 Role = ReaderRecords<RoleT>(nameof(RoleT))
             };
             var newJson = rootT.SerializeToJson();
-            File.WriteAllText(cacheDataPath, newJson);
+            File.WriteAllText(cacheDataPath, newJson,new UTF8Encoding(false));
             var newBin = rootT.SerializeToBinary();
             File.WriteAllBytes(binPath, newBin);
             AssetDatabase.Refresh();
@@ -84,7 +88,7 @@ namespace Fantasy.Logic.Editor
         {
             path = $"{Application.dataPath}/../../../config/{path}.csv";
             if (!File.Exists(path)) return new List<T>();
-            using var writer = new StreamReader(path);
+            using var writer = new StreamReader(path,new UTF8Encoding(false));
             using var csv = new CsvReader(writer, CultureInfo.InvariantCulture);
             csv.AddConverter();
             csv.Context.TypeConverterCache.AddConverter<List<string>>(new JsonConverter<List<string>>());
@@ -95,7 +99,7 @@ namespace Fantasy.Logic.Editor
         private static void WriteRecords<T>(IEnumerable<T> records, string path)
         {
             path = $"{Application.dataPath}/../../../config/{path}.csv";
-            using var writer = new StreamWriter(path);
+            using var writer = new StreamWriter(path,false,new UTF8Encoding(false));
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             csv.AddConverter();
             csv.WriteRecords(records);

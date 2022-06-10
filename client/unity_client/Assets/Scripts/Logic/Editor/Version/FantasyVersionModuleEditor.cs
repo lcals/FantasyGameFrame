@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using Fantasy.Logic.Editor;
 using Fantasy.Logic.Interface;
 using Fantasy.VersionInfo;
@@ -41,7 +42,7 @@ namespace Logic.Editor.Version
 
             File.WriteAllText(
                 $"{FantasyAssetPathEditor.LocalResourceDirectory}/{FantasyVersionModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.json",
-                versionInfoT.SerializeToJson());
+                versionInfoT.SerializeToJson(),new UTF8Encoding(false));
             File.WriteAllBytes(
                 $"{FantasyAssetPathEditor.LocalResourceDirectory}/{FantasyVersionModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.bin",
                 versionInfoT.SerializeToBinary());
@@ -53,13 +54,12 @@ namespace Logic.Editor.Version
 
             var jsonPath =
                 $"{FantasyAssetPathEditor.LocalResourceDirectory}/{FantasyVersionModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.json";
-            var versionInfoT = VersionInfoT.DeserializeFromJson(File.ReadAllText(jsonPath));
+            var versionInfoT = VersionInfoT.DeserializeFromJson(File.ReadAllText(jsonPath,new UTF8Encoding(false)));
             versionInfoT.DataVersion++;
             versionInfoT.TotalVersion++;
-
             File.WriteAllText(
                 $"{FantasyAssetPathEditor.LocalResourceDirectory}/{FantasyVersionModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.json",
-                versionInfoT.SerializeToJson());
+                versionInfoT.SerializeToJson(),new UTF8Encoding(false));
             File.WriteAllBytes(
                 $"{FantasyAssetPathEditor.LocalResourceDirectory}/{FantasyVersionModule.VersionInfoName.Replace(".json", "").Replace(".bin", "")}.bin",
                 versionInfoT.SerializeToBinary());

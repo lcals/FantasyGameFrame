@@ -102,7 +102,7 @@ namespace Fantasy.Frame.Tests
 
             testPlugin.AddModule<TestModule>(new TestModule(pluginManager, true));
             Assert.IsTrue(modules.Count == 1);
-            testPlugin.RemoveModule(typeof(TestModule).ToString());
+            testPlugin.RemoveModule<TestModule>();
             Assert.IsTrue(modules.Count == 0);
         }
 

@@ -22,6 +22,7 @@ namespace Fantasy.Logic.Achieve
 
         public FantasyConfigModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
+            
         }
 
         public async UniTask UpdateData(string url)
@@ -46,7 +47,7 @@ namespace Fantasy.Logic.Achieve
         #region Help
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void LoadData(byte[] bytes)
+        private void LoadData(byte[] bytes)
         {
             Config.ConfigRootT = ConfigRootT.DeserializeFromBinary(bytes);
             _logger.ZLogDebug("ConfigRootT.Version {0}", Config.ConfigRootT.Version.ToString());

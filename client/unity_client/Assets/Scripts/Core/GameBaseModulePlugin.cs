@@ -8,6 +8,7 @@ namespace Fantasy.Logic
     {
         public GameBaseModulePlugin(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
+            
         }
 
         public override string GetPluginName()
@@ -19,13 +20,11 @@ namespace Fantasy.Logic
         {
             AddModule<IFantasyLogModule>(new FantasyLogModule(PluginManager, false));
             AddModule<IFantasyVersionModule>(new FantasyVersionModule(PluginManager, false));
-            AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager, true));
-            AddModule<IFantasyAssetModule>(new FantasyAssetModule(PluginManager, true));
+            AddModule<IFantasyConfigModule>(new FantasyConfigModule(PluginManager, false));
         }
 
         public override void Uninstall()
         {
-            RemoveModule<IFantasyAssetModule>();
             RemoveModule<IFantasyConfigModule>();
             RemoveModule<IFantasyVersionModule>();
             RemoveModule<IFantasyLogModule>();

@@ -19,12 +19,10 @@ namespace Fantasy.Logic
         {
             Debug.Log("game awake");
             _pluginManager = new PluginManager(null, false);
-            Debug.Log("_pluginManager Install");
-            _pluginManager.Install();
+            Debug.Log("_pluginManager Registered");
+            _pluginManager.Registered();
             "pluginManager Awake".ZLogDebug();
             _pluginManager.Awake();
-            var test = _pluginManager.FindModule<ITestModule>() as ITestModule;
-            test.Test();
         }
 
         private void Start()
@@ -47,6 +45,8 @@ namespace Fantasy.Logic
             _pluginManager.BeforeShut();
             "pluginManager Shut".ZLogDebug();
             _pluginManager.Shut();
+            Debug.Log("_pluginManager UnRegistered");
+            _pluginManager.UnRegistered();
         }
     }
 }
