@@ -25,7 +25,6 @@ namespace Fantasy.Logic.Editor
                 File.Copy(newPath, newFilePath, true);
                 oldFiles.Remove(newFilePath);
             }
-
             foreach (var file in oldFiles) File.Delete(file);
         }
 

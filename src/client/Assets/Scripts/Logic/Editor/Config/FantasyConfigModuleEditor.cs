@@ -28,7 +28,7 @@ namespace Fantasy.Logic.Editor
             Debug.Log($"Shall_Open : {shell}");
 #endif
         }
-
+        
         [MenuItem("FantasyTools/Config/UpdateCsv")]
         public static void UpdateCsv()
         {
@@ -36,11 +36,9 @@ namespace Fantasy.Logic.Editor
             if (items.Count == 0) items.Add(new ItemT());
             WriteRecords(items, nameof(ItemT));
             
-            
             var roles = ReaderRecords<RoleT>(nameof(RoleT));
             if (roles.Count == 0) roles.Add(new RoleT());
             WriteRecords(roles, nameof(RoleT));
-            
         }
 
         [MenuItem("FantasyTools/Config/GenerateDataBytes")]
