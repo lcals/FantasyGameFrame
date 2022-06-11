@@ -1,0 +1,17 @@
+
+/// namespace
+namespace Fantasy.Config;
+/// ItemType
+enum ItemType:int { Unknown=0, Consumables = 1, MaterialScience=2}
+/// Item 
+table Item{
+    /// id
+    id:int;
+    /// name
+    name:string;
+    /// item type
+    item_type:ItemType=Unknown;
+    ///describe
+    describe:string;
+}
+

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>ChatApp.Shared</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\client\Assets\Scripts\ServerShared\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MagicOnion.MSBuild.Tasks" Version="4.0.0-preview.1" PrivateAssets="All" />
+    <PackageReference Include="MessagePack.MSBuild.Tasks" Version="2.1.115" PrivateAssets="All" />
+    <PackageReference Include="MagicOnion.Abstractions" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="MagicOnion.Abstractions" />
+  </ItemGroup>
+  <Target Name="GenerateMessagePack" AfterTargets="Compile">
+    <MessagePackGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Generated\MessagePack.Generated.cs" />
+  </Target>
+  <Target Name="GenerateMagicOnion" AfterTargets="Compile">
+    <MagicOnionGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Generated\MagicOnion.Generated.cs" />
+  </Target>
+</Project>

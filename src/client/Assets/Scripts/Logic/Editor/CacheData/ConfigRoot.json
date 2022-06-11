@@ -1,0 +1,84 @@
+{
+  "item": [
+    {
+      "id": 0,
+      "name": "0",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 1,
+      "name": "1",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 2,
+      "name": "2",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 3,
+      "name": "3",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 4,
+      "name": "4",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 5,
+      "name": "5",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 6,
+      "name": "6",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 7,
+      "name": "7",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 8,
+      "name": "8",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 9,
+      "name": "9",
+      "item_type": "Unknown",
+      "describe": ""
+    },
+    {
+      "id": 10,
+      "name": "10",
+      "item_type": "Unknown",
+      "describe": ""
+    }
+  ],
+  "role": [
+    {
+      "id": 0,
+      "name": "",
+      "gender": "Unknown",
+      "describe": "",
+      "default_item_id": [
+        0,
+        1
+      ]
+    }
+  ],
+  "version": 20,
+  "output_time": "06/10/2022 21:23:39"
+}

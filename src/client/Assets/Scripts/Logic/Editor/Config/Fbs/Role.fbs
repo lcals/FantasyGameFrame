@@ -1,0 +1,18 @@
+
+/// namespace
+namespace Fantasy.Config;
+/// ItemType
+enum GenderType:byte { Unknown=0, Male = 1, Female=2}
+/// Item 
+table Role{
+    /// id
+    id:int=0;
+    /// name
+    name:string;
+    /// gender type
+    gender:GenderType=Unknown;
+    /// describe
+    describe:string;
+    /// default item
+    default_item_id:[int];
+}
