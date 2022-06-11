@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="MagicOnion.MSBuild.Tasks" Version="4.5.0" PrivateAssets="All" />
-    <PackageReference Include="MessagePack.MSBuild.Tasks" Version="2.3.112" PrivateAssets="All" />
+    <PackageReference Include="MessagePack.MSBuild.Tasks" Version="2.1.115" PrivateAssets="All" />
     <PackageReference Include="MagicOnion.Abstractions" Version="4.5.0" />
   </ItemGroup>
 
@@ -19,9 +19,9 @@
     <None Remove="MagicOnion.Abstractions" />
   </ItemGroup>
   <Target Name="GenerateMessagePack" AfterTargets="Compile">
-    <MessagePackGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Generated\MessagePack.Generated.cs" />
+    <MessagePackGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Logic\Runtime\Server\Gen\MessagePack.Generated.cs" />
   </Target>
   <Target Name="GenerateMagicOnion" AfterTargets="Compile">
-    <MagicOnionGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Generated\MagicOnion.Generated.cs" />
+    <MagicOnionGenerator Input=".\shared.csproj" Output="..\client\Assets\Scripts\Logic\Runtime\Server\Gen\MagicOnion.Generated.cs" />
   </Target>
 </Project>
