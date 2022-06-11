@@ -2596,7 +2596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.02, y: 0.02}
   m_AnchorMax: {x: 0.98, y: 0.98}
-  m_AnchoredPosition: {x: 0, y: 6.5812683}
+  m_AnchoredPosition: {x: 0, y: 5.872925}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1522127879
@@ -2782,7 +2782,7 @@ MonoBehaviour:
   Input: {fileID: 330057074}
   ReportInput: {fileID: 1671399963}
   SendReportButton: {fileID: 190778108}
-  DisconnectButon: {fileID: 1096149281}
+  DisconnectButton: {fileID: 1096149281}
   ExceptionButton: {fileID: 1868729447}
   UnaryExceptionButton: {fileID: 2120537443}
 --- !u!1 &1671399961
@@ -3015,7 +3015,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 817501239}
   m_HandleRect: {fileID: 817501238}
   m_Direction: 3
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
