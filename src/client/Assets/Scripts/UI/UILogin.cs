@@ -7,7 +7,7 @@ namespace Fantasy.UI
 {
     public class UILogin : AFantasyBaseUI
     {
-        private void OnEnable()
+        private void Awake()
         {
             UILoginFlow().Forget();
         }
@@ -21,6 +21,17 @@ namespace Fantasy.UI
                     inputType = TMP_InputField.InputType.Password
                 }
             };
+            loginUiElements.LoginButton.AddListener(() =>
+            {
+                
+            });
+            loginUiElements.RegisterButton.AddListener(() =>
+            {
+            });
+            loginUiElements.ForgotPasswordButton.AddListener(() =>
+            {
+                
+            });
         }
     }
 }

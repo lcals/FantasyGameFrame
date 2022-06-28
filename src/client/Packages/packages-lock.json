@@ -91,8 +91,25 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.localization": {
+      "version": "1.0.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.addressables": "1.19.9",
+        "com.unity.nuget.newtonsoft-json": "2.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.mathematics": {
       "version": "1.2.5",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "2.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -217,7 +234,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3c4962ea1e0a65d515c37c3326c4058e2a512cce"
+      "hash": "09f06feb63ad2d2ded436276c3484396bfc8d2ce"
     },
     "dev.kyubuns.akyuiunityxd": {
       "version": "https://github.com/kyubuns/AkyuiUnity.git?path=Assets/AkyuiUnity.Xd",
@@ -226,7 +243,7 @@
       "dependencies": {
         "com.unity.vectorgraphics": "2.0.0-preview.17"
       },
-      "hash": "3c4962ea1e0a65d515c37c3326c4058e2a512cce"
+      "hash": "09f06feb63ad2d2ded436276c3484396bfc8d2ce"
     },
     "dev.kyubuns.ankuchen": {
       "version": "https://github.com/kyubuns/AnKuchen.git?path=Unity/Assets/AnKuchen",

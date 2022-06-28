@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4285050514
   m_fontColor: {r: 0.57254905, g: 0.68235296, b: 0.40784314, a: 0.999477}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 7396855978283731271}
   - component: {fileID: 3758136248179370455}
   - component: {fileID: 5439697115373112877}
+  - component: {fileID: 3812298518896737053}
   m_Layer: 0
   m_Name: GameRoot
   m_TagString: Untagged
@@ -244,6 +245,19 @@ MonoBehaviour:
     Path: 368c482e1a5db85c
   - GameObject: {fileID: 8623696427451667063}
     Path: b211e5df1a5db85c
+--- !u!114 &3812298518896737053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2542583305113300958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd4bacf111a4acbbd8a18c3e021e8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsOpen: 0
 --- !u!1 &2694313706166355333
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +651,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4287058688
   m_fontColor: {r: 0, g: 0.3254902, b: 0.5294118, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -650,7 +664,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2

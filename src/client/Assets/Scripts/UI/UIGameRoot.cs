@@ -9,9 +9,7 @@ namespace Fantasy.UI
 {
     public class UIGameRoot : AFantasyBaseUI
     {
-       
-
-        private void OnEnable()
+        private void Awake()
         {
             GameRootFlow().Forget();
         }

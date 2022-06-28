@@ -82,7 +82,7 @@ namespace Fantasy.Logic.Interface
                 }
                 catch (Exception e)
                 {
-                    _logger.ZLogError("Exception :", e);
+                    _logger.ZLogError("Exception :", e.Message);
                 }
 
                
