@@ -1,9 +1,10 @@
-using ChatApp.Shared.Hubs;
-using ChatApp.Shared.MessagePackObjects;
-using MagicOnion.Server.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Fantasy.Logic.ServerShared;
+using MagicOnion.Server.Hubs;
+
+
 
 namespace ChatApp.Server
 {

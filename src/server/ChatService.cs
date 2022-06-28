@@ -1,4 +1,5 @@
-using ChatApp.Shared.Services;
+
+using Fantasy.Logic.ServerShared;
 using MagicOnion;
 using MagicOnion.Server;
 using MessagePack;

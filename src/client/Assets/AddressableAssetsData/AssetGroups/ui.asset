@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: ui
+  m_Name: UI
   m_EditorClassIdentifier: 
-  m_GroupName: ui
+  m_GroupName: UI
   m_Data:
     m_SerializedData: []
   m_GUID: 0f7c382dd17ed44fcb05ead28af44dea
   m_SerializeEntries:
-  - m_GUID: ddab149db147e47898bbb2e6aa1a8c87
-    m_Address: Asset/UIPrefabs/GameRoot.prefab
+  - m_GUID: 304ff790fe4f641b09c15675442c556c
+    m_Address: Assets/Asset/UI/Prefabs/Login.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

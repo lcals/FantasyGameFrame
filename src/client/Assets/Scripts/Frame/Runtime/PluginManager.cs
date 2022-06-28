@@ -86,10 +86,10 @@ namespace Fantasy.Frame
             _modules.Remove(moduleName);
             if (module.IsUpdate) _updates = _modules.Values.ToArray();
         }
-        public AModule FindModule<T>()
+        public T FindModule<T>()
         {
             var moduleName = typeof(T).ToString();
-            return _modules.TryGetValue(moduleName, out var module) ? module : null;
+            return _modules.TryGetValue(moduleName, out var module) ? module is T value ? value : default: default ;
         }
 
        

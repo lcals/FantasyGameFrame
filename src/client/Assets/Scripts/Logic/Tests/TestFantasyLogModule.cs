@@ -43,7 +43,7 @@ public class TestFantasyLogModule
         var pluginManager = new PluginManager(null, false);
         var testPlugin = new TestPlugin(pluginManager, true);
         pluginManager.Registered(testPlugin);
-        IFantasyLogModule findModule = pluginManager.FindModule<IFantasyLogModule>() as FantasyLogModule;
+        var findModule = pluginManager.FindModule<IFantasyLogModule>();
         findModule.GetLogger<TestPlugin>().ZLogDebug("Test GetLogger");
     }
 
@@ -53,7 +53,7 @@ public class TestFantasyLogModule
         var pluginManager = new PluginManager(null, false);
         var testPlugin = new TestPlugin(pluginManager, true);
         pluginManager.Registered(testPlugin);
-        IFantasyLogModule findModule = pluginManager.FindModule<IFantasyLogModule>() as FantasyLogModule;
+        var findModule = pluginManager.FindModule<IFantasyLogModule>();
         findModule.GetLogger("CategoryName").ZLogDebug("Test GetLoggerCategoryName");
     }
 }

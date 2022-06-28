@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d23eb964d8642fa96930d84887f5231, type: 3}
   m_Name: AnKuchenCopyTemplateSettings
   m_EditorClassIdentifier: 
-  className: '{0}UiElements'
+  className: '{0}Elements'
   pickupComponentNames:
   - Button
-  - InputField
-  - Text
   - TextMeshProUGUI
+  - TMP_InputField
   removeText: []

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Cysharp.Text;
@@ -7,7 +8,6 @@ using Fantasy.Config;
 using Fantasy.Frame;
 using Fantasy.Logic.Interface;
 using Microsoft.Extensions.Logging;
-using UnityEngine;
 using UnityEngine.Networking;
 using ZLogger;
 
@@ -42,6 +42,10 @@ namespace Fantasy.Logic.Achieve
             {
                 if (ex.CancellationToken == cts.Token) _logger.ZLogError("request timed out {0}", fullUrl);
             }
+            catch (Exception e)
+            {
+                _logger.ZLogError("Exception :", e);
+            }
         }
 
         #region Help
@@ -59,7 +63,7 @@ namespace Fantasy.Logic.Achieve
 
         public override void Awake()
         {
-            _fantasyLogModule = PluginManager.FindModule<IFantasyLogModule>() as FantasyLogModule;
+            _fantasyLogModule = PluginManager.FindModule<IFantasyLogModule>();
             Debug.Assert(_fantasyLogModule != null, nameof(_fantasyLogModule) + " != null");
             _logger = _fantasyLogModule.GetLogger<FantasyConfigModule>();
             _logger.ZLogDebug("{0}   Awake", nameof(FantasyConfigModule));

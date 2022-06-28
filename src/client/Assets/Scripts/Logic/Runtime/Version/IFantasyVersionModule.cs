@@ -9,5 +9,6 @@ namespace Fantasy.Logic.Interface
         bool GetUpdateSuccessful();
         VersionInfoT GetNewVersionInfoT();
         void StartUpdate();
+        bool GetGameUpdateSuccessful();
     }
 }

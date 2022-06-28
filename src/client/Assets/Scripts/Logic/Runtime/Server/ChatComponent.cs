@@ -1,16 +1,14 @@
 using System;
-using ChatApp.Shared.Hubs;
-using ChatApp.Shared.MessagePackObjects;
-using ChatApp.Shared.Services;
 using Grpc.Core;
 using MagicOnion.Client;
 using System.Threading;
 using System.Threading.Tasks;
+using Fantasy.Logic.ServerShared;
 using MagicOnion;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Fantasy.Logic.Achieve
 {
     public class ChatComponent : MonoBehaviour, IChatHubReceiver
     {

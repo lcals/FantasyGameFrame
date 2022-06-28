@@ -51,8 +51,8 @@ namespace MessagePack.Resolvers
         {
             lookup = new global::System.Collections.Generic.Dictionary<Type, int>(2)
             {
-                { typeof(global::ChatApp.Shared.MessagePackObjects.JoinRequest), 0 },
-                { typeof(global::ChatApp.Shared.MessagePackObjects.MessageResponse), 1 },
+                { typeof(global::Fantasy.Logic.ServerShared.JoinRequest), 0 },
+                { typeof(global::Fantasy.Logic.ServerShared.MessageResponse), 1 },
             };
         }
 
@@ -66,8 +66,8 @@ namespace MessagePack.Resolvers
 
             switch (key)
             {
-                case 0: return new MessagePack.Formatters.ChatApp.Shared.MessagePackObjects.JoinRequestFormatter();
-                case 1: return new MessagePack.Formatters.ChatApp.Shared.MessagePackObjects.MessageResponseFormatter();
+                case 0: return new MessagePack.Formatters.Fantasy.Logic.ServerShared.JoinRequestFormatter();
+                case 1: return new MessagePack.Formatters.Fantasy.Logic.ServerShared.MessageResponseFormatter();
                 default: return null;
             }
         }
@@ -102,17 +102,17 @@ namespace MessagePack.Resolvers
 #pragma warning disable SA1403 // File may only contain a single namespace
 #pragma warning disable SA1649 // File name should match first type name
 
-namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
+namespace MessagePack.Formatters.Fantasy.Logic.ServerShared
 {
     using System;
     using System.Buffers;
     using MessagePack;
 
-    public sealed class JoinRequestFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::ChatApp.Shared.MessagePackObjects.JoinRequest>
+    public sealed class JoinRequestFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::Fantasy.Logic.ServerShared.JoinRequest>
     {
 
 
-        public void Serialize(ref MessagePackWriter writer, global::ChatApp.Shared.MessagePackObjects.JoinRequest value, global::MessagePack.MessagePackSerializerOptions options)
+        public void Serialize(ref MessagePackWriter writer, global::Fantasy.Logic.ServerShared.JoinRequest value, global::MessagePack.MessagePackSerializerOptions options)
         {
             IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(2);
@@ -120,7 +120,7 @@ namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
             formatterResolver.GetFormatterWithVerify<string>().Serialize(ref writer, value.UserName, options);
         }
 
-        public global::ChatApp.Shared.MessagePackObjects.JoinRequest Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        public global::Fantasy.Logic.ServerShared.JoinRequest Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (reader.TryReadNil())
             {
@@ -151,7 +151,7 @@ namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
                 }
             }
 
-            var ____result = new global::ChatApp.Shared.MessagePackObjects.JoinRequest();
+            var ____result = new global::Fantasy.Logic.ServerShared.JoinRequest();
             ____result.RoomName = __RoomName__;
             ____result.UserName = __UserName__;
             reader.Depth--;
@@ -159,11 +159,11 @@ namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
         }
     }
 
-    public sealed class MessageResponseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::ChatApp.Shared.MessagePackObjects.MessageResponse>
+    public sealed class MessageResponseFormatter : global::MessagePack.Formatters.IMessagePackFormatter<global::Fantasy.Logic.ServerShared.MessageResponse>
     {
 
 
-        public void Serialize(ref MessagePackWriter writer, global::ChatApp.Shared.MessagePackObjects.MessageResponse value, global::MessagePack.MessagePackSerializerOptions options)
+        public void Serialize(ref MessagePackWriter writer, global::Fantasy.Logic.ServerShared.MessageResponse value, global::MessagePack.MessagePackSerializerOptions options)
         {
             IFormatterResolver formatterResolver = options.Resolver;
             writer.WriteArrayHeader(2);
@@ -171,7 +171,7 @@ namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
             formatterResolver.GetFormatterWithVerify<string>().Serialize(ref writer, value.Message, options);
         }
 
-        public global::ChatApp.Shared.MessagePackObjects.MessageResponse Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
+        public global::Fantasy.Logic.ServerShared.MessageResponse Deserialize(ref MessagePackReader reader, global::MessagePack.MessagePackSerializerOptions options)
         {
             if (reader.TryReadNil())
             {
@@ -202,7 +202,7 @@ namespace MessagePack.Formatters.ChatApp.Shared.MessagePackObjects
                 }
             }
 
-            var ____result = new global::ChatApp.Shared.MessagePackObjects.MessageResponse();
+            var ____result = new global::Fantasy.Logic.ServerShared.MessageResponse();
             ____result.UserName = __UserName__;
             ____result.Message = __Message__;
             reader.Depth--;

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b87b7045c01a40039c29111029704d7, type: 3}
   m_Name: XdImportSettings
   m_EditorClassIdentifier: 
-  prefabOutputPath: Assets/Asset/UIPrefabs/{name}
-  assetOutputDirectoryPath: Assets/Asset/UIPrefabs/{name}/
-  metaOutputPath: Assets/Asset/UIPrefabs/{name}/Meta
+  prefabOutputPath: Assets/Asset/UI/Prefabs/{name}
+  assetOutputDirectoryPath: Assets/Asset/UI/Asset/{name}/Asset
+  metaOutputPath: Assets/Asset/UI/Meta/{name}/Meta
   fontDirectoryPath: Assets/Asset/Fonts
   texturePreset: {fileID: 0}
   triggers:

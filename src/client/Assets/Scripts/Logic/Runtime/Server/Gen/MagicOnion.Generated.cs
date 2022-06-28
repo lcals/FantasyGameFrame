@@ -23,9 +23,9 @@ namespace MagicOnion
             if(isRegistered) return;
             isRegistered = true;
 
-            MagicOnionClientRegistry<ChatApp.Shared.Services.IChatService>.Register((x, y, z) => new ChatApp.Shared.Services.ChatServiceClient(x, y, z));
+            MagicOnionClientRegistry<Fantasy.Logic.ServerShared.IChatService>.Register((x, y, z) => new Fantasy.Logic.ServerShared.ChatServiceClient(x, y, z));
 
-            StreamingHubClientRegistry<ChatApp.Shared.Hubs.IChatHub, ChatApp.Shared.Hubs.IChatHubReceiver>.Register((a, _, b, c, d, e) => new ChatApp.Shared.Hubs.ChatHubClient(a, b, c, d, e));
+            StreamingHubClientRegistry<Fantasy.Logic.ServerShared.IChatHub, Fantasy.Logic.ServerShared.IChatHubReceiver>.Register((a, _, b, c, d, e) => new Fantasy.Logic.ServerShared.ChatHubClient(a, b, c, d, e));
         }
     }
 }
@@ -119,7 +119,7 @@ namespace MagicOnion.Resolvers
 #pragma warning disable 219
 #pragma warning disable 168
 
-namespace ChatApp.Shared.Services {
+namespace Fantasy.Logic.ServerShared {
     using System;
     using MagicOnion;
     using MagicOnion.Client;
@@ -127,7 +127,7 @@ namespace ChatApp.Shared.Services {
     using MessagePack;
 
     [Ignore]
-    public class ChatServiceClient : MagicOnionClientBase<global::ChatApp.Shared.Services.IChatService>, global::ChatApp.Shared.Services.IChatService
+    public class ChatServiceClient : MagicOnionClientBase<global::Fantasy.Logic.ServerShared.IChatService>, global::Fantasy.Logic.ServerShared.IChatService
     {
         static readonly Method<byte[], byte[]> GenerateExceptionMethod;
         static readonly Func<RequestContext, ResponseContext> GenerateExceptionDelegate;
@@ -219,7 +219,7 @@ namespace ChatApp.Shared.Services {
 #pragma warning disable 219
 #pragma warning disable 168
 
-namespace ChatApp.Shared.Hubs {
+namespace Fantasy.Logic.ServerShared {
     using Grpc.Core;
     using MagicOnion;
     using MagicOnion.Client;
@@ -228,13 +228,13 @@ namespace ChatApp.Shared.Hubs {
     using System.Threading.Tasks;
 
     [Ignore]
-    public class ChatHubClient : StreamingHubClientBase<global::ChatApp.Shared.Hubs.IChatHub, global::ChatApp.Shared.Hubs.IChatHubReceiver>, global::ChatApp.Shared.Hubs.IChatHub
+    public class ChatHubClient : StreamingHubClientBase<global::Fantasy.Logic.ServerShared.IChatHub, global::Fantasy.Logic.ServerShared.IChatHubReceiver>, global::Fantasy.Logic.ServerShared.IChatHub
     {
         static readonly Method<byte[], byte[]> method = new Method<byte[], byte[]>(MethodType.DuplexStreaming, "IChatHub", "Connect", MagicOnionMarshallers.ThroughMarshaller, MagicOnionMarshallers.ThroughMarshaller);
 
         protected override Method<byte[], byte[]> DuplexStreamingAsyncMethod { get { return method; } }
 
-        readonly global::ChatApp.Shared.Hubs.IChatHub __fireAndForgetClient;
+        readonly global::Fantasy.Logic.ServerShared.IChatHub __fireAndForgetClient;
 
         public ChatHubClient(CallInvoker callInvoker, string host, CallOptions option, MessagePackSerializerOptions serializerOptions, IMagicOnionClientLogger logger)
             : base(callInvoker, host, option, serializerOptions, logger)
@@ -242,7 +242,7 @@ namespace ChatApp.Shared.Hubs {
             this.__fireAndForgetClient = new FireAndForgetClient(this);
         }
         
-        public global::ChatApp.Shared.Hubs.IChatHub FireAndForget()
+        public global::Fantasy.Logic.ServerShared.IChatHub FireAndForget()
         {
             return __fireAndForgetClient;
         }
@@ -263,7 +263,7 @@ namespace ChatApp.Shared.Hubs {
                 }
                 case -552695459: // OnSendMessage
                 {
-                    var result = MessagePackSerializer.Deserialize<global::ChatApp.Shared.MessagePackObjects.MessageResponse>(data, serializerOptions);
+                    var result = MessagePackSerializer.Deserialize<global::Fantasy.Logic.ServerShared.MessageResponse>(data, serializerOptions);
                     receiver.OnSendMessage(result); break;
                 }
                 default:
@@ -310,9 +310,9 @@ namespace ChatApp.Shared.Hubs {
             }
         }
    
-        public global::System.Threading.Tasks.Task JoinAsync(global::ChatApp.Shared.MessagePackObjects.JoinRequest request)
+        public global::System.Threading.Tasks.Task JoinAsync(global::Fantasy.Logic.ServerShared.JoinRequest request)
         {
-            return WriteMessageWithResponseAsync<global::ChatApp.Shared.MessagePackObjects.JoinRequest, Nil>(-733403293, request);
+            return WriteMessageWithResponseAsync<global::Fantasy.Logic.ServerShared.JoinRequest, Nil>(-733403293, request);
         }
 
         public global::System.Threading.Tasks.Task LeaveAsync()
@@ -336,7 +336,7 @@ namespace ChatApp.Shared.Hubs {
         }
 
 
-        class FireAndForgetClient : global::ChatApp.Shared.Hubs.IChatHub
+        class FireAndForgetClient : global::Fantasy.Logic.ServerShared.IChatHub
         {
             readonly ChatHubClient __parent;
 
@@ -345,7 +345,7 @@ namespace ChatApp.Shared.Hubs {
                 this.__parent = parentClient;
             }
 
-            public global::ChatApp.Shared.Hubs.IChatHub FireAndForget()
+            public global::Fantasy.Logic.ServerShared.IChatHub FireAndForget()
             {
                 throw new NotSupportedException();
             }
@@ -360,9 +360,9 @@ namespace ChatApp.Shared.Hubs {
                 throw new NotSupportedException();
             }
 
-            public global::System.Threading.Tasks.Task JoinAsync(global::ChatApp.Shared.MessagePackObjects.JoinRequest request)
+            public global::System.Threading.Tasks.Task JoinAsync(global::Fantasy.Logic.ServerShared.JoinRequest request)
             {
-                return __parent.WriteMessageAsync<global::ChatApp.Shared.MessagePackObjects.JoinRequest>(-733403293, request);
+                return __parent.WriteMessageAsync<global::Fantasy.Logic.ServerShared.JoinRequest>(-733403293, request);
             }
 
             public global::System.Threading.Tasks.Task LeaveAsync()

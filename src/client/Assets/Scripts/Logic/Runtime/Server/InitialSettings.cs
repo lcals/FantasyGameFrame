@@ -8,7 +8,7 @@ using MessagePack;
 using MessagePack.Resolvers;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Fantasy.Logic.Achieve
 {
     internal static class InitialSettings
     {

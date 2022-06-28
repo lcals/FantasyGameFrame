@@ -9,7 +9,7 @@ showStatusBar = false
 scopes = {
 	"last_search.8788AF05" = ""
 	"OpenInspectorPreview.8788AF05" = "0"
-	"currentGroup.8788AF05" = "asset"
+	"currentGroup.8788AF05" = "all"
 }
 providers = {
 	find = {
@@ -54,6 +54,7 @@ providers = {
 	}
 }
 recentSearches = [
+	"listeners"
 	"t:prefab"
 ]
 searchItemFavorites = [

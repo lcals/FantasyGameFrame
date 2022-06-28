@@ -30,6 +30,7 @@ namespace Fantasy.Logic.Interface
 
         private bool _init;
         private bool _initUpdate;
+        private bool _updateGame;
 
         public FantasyVersionModule(PluginManager pluginManager, bool isUpdate) : base(pluginManager, isUpdate)
         {
@@ -42,8 +43,8 @@ namespace Fantasy.Logic.Interface
 
         public override void Awake()
         {
-            _fantasyLogModule = PluginManager.FindModule<IFantasyLogModule>() as FantasyLogModule;
-            _fantasyConfigModule = PluginManager.FindModule<IFantasyConfigModule>() as IFantasyConfigModule;
+            _fantasyConfigModule = PluginManager.FindModule<IFantasyConfigModule>();
+            _fantasyLogModule = PluginManager.FindModule<IFantasyLogModule>();
             Debug.Assert(_fantasyLogModule != null, nameof(_fantasyLogModule) + " != null");
             _logger = _fantasyLogModule.GetLogger<FantasyVersionModule>();
             _logger.ZLogDebug("{0}   Awake", nameof(FantasyVersionModule));
@@ -79,6 +80,12 @@ namespace Fantasy.Logic.Interface
                         _logger.ZLogError("request timed out {0}", url);
                     }
                 }
+                catch (Exception e)
+                {
+                    _logger.ZLogError("Exception :", e);
+                }
+
+               
             }
 
             _initUpdate = true;
@@ -93,7 +100,11 @@ namespace Fantasy.Logic.Interface
         {
             return _initUpdate;
         }
-
+        public bool GetGameUpdateSuccessful()
+        {
+            return _updateGame;
+        }
+        
         public void StartUpdate()
         {
             _logger.ZLogDebug("{0}   StartUpdate", nameof(FantasyVersionModule));
@@ -106,6 +117,8 @@ namespace Fantasy.Logic.Interface
             var updateData = UpdateDataAsync();
             var updateAssetBundle = UpdateAssetBundleAsync();
             await (updateData, updateAssetBundle);
+            _updateGame = true;
+
         }
 
 

@@ -14,7 +14,6 @@ namespace Fantasy.Logic.Editor
         {
             var sourcePath = FantasyAssetPathEditor.LocalResourceDirectory;
             var targetPath = Application.streamingAssetsPath;
-            var oldFiles = Directory.GetFiles(targetPath, "*.*", SearchOption.AllDirectories).ToList();
             //创建所有新目录
             foreach (var dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
@@ -23,9 +22,7 @@ namespace Fantasy.Logic.Editor
             {
                 var newFilePath = newPath.Replace(sourcePath, targetPath);
                 File.Copy(newPath, newFilePath, true);
-                oldFiles.Remove(newFilePath);
             }
-            foreach (var file in oldFiles) File.Delete(file);
         }
 
         public void OnPreprocessBuild(BuildReport report)

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\client\Assets\Scripts\ServerShared\**\*.cs" />
+    <Compile Include="..\client\Assets\Scripts\Logic\Runtime\Server\ServerShared\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

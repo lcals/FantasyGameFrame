@@ -1,24 +1,24 @@
-using AnKuchen.Map;
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using Fantasy.Logic;
+using Fantasy.Logic.Achieve;
 using Fantasy.Logic.Interface;
 using Fantasy.UI.Gen;
-using UnityEngine;
 
 namespace Fantasy.UI
 {
-    public class UIGameRoot : MonoBehaviour
+    public class UIGameRoot : AFantasyBaseUI
     {
-        private void Awake()
+       
+
+        private void OnEnable()
         {
             GameRootFlow().Forget();
         }
-
         private async UniTask GameRootFlow()
         {
-            var gameRootUICache = GetComponent<UICache>();
-            var gameRootUiElements = new GameRootUiElements(gameRootUICache)
+         
+            var gameRootUiElements = new GameRootElements(GameRootUICache)
             {
                 VersionTitle =
                 {
@@ -28,7 +28,7 @@ namespace Fantasy.UI
             gameRootUiElements.UpdateGameButton.gameObject.SetActive(false);
             await UniTask.WaitUntil(() => GameRoot.Successful);
             var pluginManager = GameRoot.GetPluginManager();
-            if (pluginManager.FindModule<IFantasyVersionModule>() is not IFantasyVersionModule fantasyVersionModule)
+            if (pluginManager.FindModule<IFantasyVersionModule>() is not { } fantasyVersionModule)
                 return;
             await UniTask.WaitUntil(() => fantasyVersionModule.GetInitSuccessful());
             var oldVersion = fantasyVersionModule.GetOldVersionInfoT();
@@ -41,13 +41,20 @@ namespace Fantasy.UI
                     gameRootUiElements.VersionTitle.text = oldVersion.TotalVersion.ToString();
                     return;
                 }
-
                 gameRootUiElements.VersionTitle.text = ZString.Format("{0} -> {1}", oldVersion.TotalVersion.ToString(),
                     newVersion.TotalVersion.ToString());
                 gameRootUiElements.UpdateGameButton.gameObject.SetActive(true);
                 await gameRootUiElements.UpdateGameButton.OnClickAsync();
                 fantasyVersionModule.StartUpdate();
+                await UniTask.WaitUntil(() => fantasyVersionModule.GetGameUpdateSuccessful());
                 gameRootUiElements.UpdateGameButton.gameObject.SetActive(false);
+                await gameRootUiElements.StartGameButton.OnClickAsync();
+                if (pluginManager.FindModule<IFantasyUIModule>() is not { } fantasyUIModule)
+                    return;
+                fantasyUIModule.OpenUI<UILogin>();
+                await UniTask.WaitUntil(() => fantasyUIModule.GetUI<UILogin>()!=null);
+                gameRootUiElements.Root.SetActive(false);
+                
             }
             else
             {
